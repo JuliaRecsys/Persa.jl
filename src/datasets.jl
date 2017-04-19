@@ -51,120 +51,19 @@ function correct(rating::Real, preferences::RatingPreferences)
   return rating
 end
 
+function Dataset(df::DataFrame)::CFDatasetAbstract
+  @assert in(:user, names(df))
+  @assert in(:item, names(df))
+  @assert in(:rating, names(df))
+
+  if in(:timestamp, names(df))
+    return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
+  else
+    return CFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
+  end
+end
+
 Base.length{T<:CFDatasetAbstract}(dataset::T) = size(dataset.file)[1]
-
-function MovieLens()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/ml-100k/u.data"), separator = ' ', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = file[:,2]
-  df[:rating] = file[:,3]
-  df[:timestamp] = file[:,4]
-
-  return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function MovieLens1M()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/ml-1M/ratings.dat"), separator = ' ', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = labelencode(labelmap(file[:,2]), file[:,2])
-  df[:rating] = file[:,3]
-  df[:timestamp] = file[:,4]
-
-  return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function Netflix()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/netflix/netflix.csv"), separator = ',', header = false)
-
-  df = DataFrame()
-
-  df[:user] = labelencode(labelmap(file[:,1]), file[:,1])
-  df[:item] = file[:,2]
-  df[:rating] = file[:,3]
-
-  return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function MovieTweeting()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/Movie-Tweeting-200k/ratings.dat"), separator = ':', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = labelencode(labelmap(file[:,2]), file[:,2])
-  df[:rating] = file[:,3]
-  df[:timestamp] = file[:,4]
-
-  return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function MovieTweeting10k()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/mt-snapshot-10k/ratings.dat"), separator = ':', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = labelencode(labelmap(file[:,2]), file[:,2])
-  df[:rating] = file[:,3]
-  df[:timestamp] = file[:,4]
-
-  return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function CiaoDVD()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/CiaoDVD/movie-ratings.txt"), separator = ',', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = file[:,2]
-  df[:rating] = file[:,5]
-  df[:timestamp] = file[:,6]
-
-  return TimeCFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function FilmTrust()::CFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/FilmTrust/ratings.txt"), separator = ' ', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = file[:,2]
-  df[:rating] = file[:,3]
-
-  return CFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function YahooMusic()::CFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/yahoo-music-r3/ymusic-r3-dummy-time.dat"), separator = ' ', header = false)
-
-  df = DataFrame()
-
-  df[:user] = file[:,1]
-  df[:item] = file[:,2]
-  df[:rating] = file[:,3]
-
-  return CFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
-
-function LastFM()::CFDataset
-  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/lastfm/last_fm.dat"), separator = ',', header = false)
-
-  df = DataFrame()
-
-  df[:user] = labelencode(labelmap(file[:,1]), file[:,1])
-  df[:item] = labelencode(labelmap(file[:,2]), file[:,2])
-  df[:rating] = file[:,3]
-
-  return CFDataset(df, maximum(df[:user]), maximum(df[:item]), RatingPreferences(convert(Array, unique(df[:rating]))))
-end
 
 sparsity(dataset::CFDatasetAbstract) = length(dataset) / (dataset.users * dataset.items)
 
