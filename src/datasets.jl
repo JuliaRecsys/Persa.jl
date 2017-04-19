@@ -40,7 +40,7 @@ Base.round(rating::Float64, preferences::RatingPreferences{Int}) = Base.round(co
 Base.round{T}(rating, preferences::RatingPreferences{T}) = Base.round(convert(T, rating), preferences)
 
 recommendation(preferences::RatingPreferences) = maximum(preferences) - round(1/3 * (maximum(preferences) -  minimum(preferences)))
-recommendation(ds::CFDatasetAbstract) = maximum(ds.preferences) - round(1/3 * (maximum(ds.preferences) -  minimum(ds.preferences)))
+recommendation(ds::CFDatasetAbstract) = recommendation(ds.preferences)
 
 function correct(rating::Real, preferences::RatingPreferences)
   if rating > maximum(preferences)
