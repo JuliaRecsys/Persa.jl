@@ -2,22 +2,13 @@
 language: julia
 os:
   - linux
-  - osx
 julia:
   - release
   - nightly
 before_install:
  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update              ; fi
- - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y python-pyx python3-pip python-pip ; fi
- # Yes, we really do need to double-install PyX with both apt-get and pip here!
- # See: https://github.com/travis-ci/travis-ci/issues/4989 (python path)
- # Also: https://github.com/travis-ci/travis-ci/issues/1705 (pip permissions)
- - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pip install --user -I PyX==0.12.1    ; fi
- - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pip3 install --user scikit-surprise               ; fi
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update > /dev/null                ; fi
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install caskroom/cask/brew-cask > /dev/null; fi
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install mactex > /dev/null   ; fi
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install scikit-surprise       ; fi
+ - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y python-pip   ; fi
+ - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pip3 install --user scikit-surprise  ; fi
 notifications:
   email: false
 # uncomment the following lines to override the default test script
