@@ -1,4 +1,4 @@
-module Pers
+module Persa
 
 # package code goes here
 

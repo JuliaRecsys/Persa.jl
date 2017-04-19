@@ -1,5 +1,5 @@
-reload("Pers")
-cf = Pers
+reload("Persa")
+cf = Persa
 
 ds = cf.FilmTrust()
 

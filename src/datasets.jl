@@ -54,7 +54,7 @@ end
 Base.length{T<:CFDatasetAbstract}(dataset::T) = size(dataset.file)[1]
 
 function MovieLens()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/ml-100k/u.data"), separator = ' ', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/ml-100k/u.data"), separator = ' ', header = false)
 
   df = DataFrame()
 
@@ -67,7 +67,7 @@ function MovieLens()::TimeCFDataset
 end
 
 function MovieLens1M()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/ml-1M/ratings.dat"), separator = ' ', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/ml-1M/ratings.dat"), separator = ' ', header = false)
 
   df = DataFrame()
 
@@ -80,7 +80,7 @@ function MovieLens1M()::TimeCFDataset
 end
 
 function Netflix()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/netflix/netflix.csv"), separator = ',', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/netflix/netflix.csv"), separator = ',', header = false)
 
   df = DataFrame()
 
@@ -92,7 +92,7 @@ function Netflix()::TimeCFDataset
 end
 
 function MovieTweeting()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/Movie-Tweeting-200k/ratings.dat"), separator = ':', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/Movie-Tweeting-200k/ratings.dat"), separator = ':', header = false)
 
   df = DataFrame()
 
@@ -105,7 +105,7 @@ function MovieTweeting()::TimeCFDataset
 end
 
 function MovieTweeting10k()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/mt-snapshot-10k/ratings.dat"), separator = ':', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/mt-snapshot-10k/ratings.dat"), separator = ':', header = false)
 
   df = DataFrame()
 
@@ -118,7 +118,7 @@ function MovieTweeting10k()::TimeCFDataset
 end
 
 function CiaoDVD()::TimeCFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/CiaoDVD/movie-ratings.txt"), separator = ',', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/CiaoDVD/movie-ratings.txt"), separator = ',', header = false)
 
   df = DataFrame()
 
@@ -131,7 +131,7 @@ function CiaoDVD()::TimeCFDataset
 end
 
 function FilmTrust()::CFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/FilmTrust/ratings.txt"), separator = ' ', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/FilmTrust/ratings.txt"), separator = ' ', header = false)
 
   df = DataFrame()
 
@@ -143,7 +143,7 @@ function FilmTrust()::CFDataset
 end
 
 function YahooMusic()::CFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/yahoo-music-r3/ymusic-r3-dummy-time.dat"), separator = ' ', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/yahoo-music-r3/ymusic-r3-dummy-time.dat"), separator = ' ', header = false)
 
   df = DataFrame()
 
@@ -155,7 +155,7 @@ function YahooMusic()::CFDataset
 end
 
 function LastFM()::CFDataset
-  file = readtable(string(Pkg.dir("Pers"),".jl","/datasets/lastfm/last_fm.dat"), separator = ',', header = false)
+  file = readtable(string(Pkg.dir("Persa"),".jl","/datasets/lastfm/last_fm.dat"), separator = ',', header = false)
 
   df = DataFrame()
 

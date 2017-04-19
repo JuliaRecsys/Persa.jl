@@ -1,6 +1,6 @@
-reload("Pers")
+reload("Persa")
 
-cf = Pers
+cf = Persa
 
 ds = cf.CiaoDVD()
 

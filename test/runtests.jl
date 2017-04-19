@@ -1,7 +1,7 @@
-using Pers.jl
+using Persa
 using Base.Test
 
-cf = Pers
+cf = Persa
 
 #Testing Dataset
 
