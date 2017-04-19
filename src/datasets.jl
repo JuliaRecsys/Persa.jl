@@ -63,6 +63,14 @@ function Dataset(df::DataFrame)::CFDatasetAbstract
   end
 end
 
+function createdummydataset()::CFDatasetAbstract
+  df = DataFrame()
+  df[:user] = [1, 2, 3, 4, 5]
+  df[:item] = [1, 2, 3, 4, 5]
+  df[:rating] = [0.5, 1.0, 1.5, 2.0, 2.0]
+  return Dataset(df)
+end
+
 Base.length{T<:CFDatasetAbstract}(dataset::T) = size(dataset.file)[1]
 
 sparsity(dataset::CFDatasetAbstract) = length(dataset) / (dataset.users * dataset.items)
