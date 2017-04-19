@@ -71,7 +71,7 @@ function createdummydataset()::CFDatasetAbstract
   return Dataset(df)
 end
 
-Base.length{T<:CFDatasetAbstract}(dataset::T) = size(dataset.file)[1]
+Base.length(dataset::CFDatasetAbstract) = size(dataset.file)[1]
 
 sparsity(dataset::CFDatasetAbstract) = length(dataset) / (dataset.users * dataset.items)
 
