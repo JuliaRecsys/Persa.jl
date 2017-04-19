@@ -21,11 +21,11 @@ Weight() = Weight(NaN, false, 0)
 function Similarity{T<:CFDatasetAbstract}(dataset::T, k::Int; γ = 10)
   elements = dataset.users
 
-  w = Array{CollaborativeFiltering.Weight,2}(elements, elements)
+  w = Array{Persa.Weight,2}(elements, elements)
 
   for i=1:minimum(size(w))
     for j=1:maximum(size(w))
-      w[i,j] = CollaborativeFiltering.Weight()
+      w[i,j] = Persa.Weight()
     end
   end
 

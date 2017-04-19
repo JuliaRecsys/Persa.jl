@@ -62,9 +62,9 @@ function train!{T<:CFDatasetAbstract}(model::ImprovedRegularizedSVD,
                 min_epochs=0,
                 max_epochs=1000)::ModelStatistic
 
-  holdout = CollaborativeFiltering.HoldOut(dataset, 0.9)
+  holdout = Persa.HoldOut(dataset, 0.9)
 
-  (ds_v_train, ds_v_test) = CollaborativeFiltering.get(holdout)
+  (ds_v_train, ds_v_test) = Persa.get(holdout)
 
   errors_function = []
   errors_val = []
@@ -81,7 +81,7 @@ function train!{T<:CFDatasetAbstract}(model::ImprovedRegularizedSVD,
     update!(model, ds_v_train, lrate, lambda)
 
     Base.push!(errors_function, error(model, ds_v_train, lambda))
-    Base.push!(errors_val, CollaborativeFiltering.aval(model, ds_v_test).rmse)
+    Base.push!(errors_val, Persa.aval(model, ds_v_test).rmse)
 
     if epoch > min_epochs && epoch >= 2
       if errors_function[end] > errors_function[end-1]
@@ -114,7 +114,7 @@ function train!{T<:CFDatasetAbstract}(model::ImprovedRegularizedSVD,
     end
   end
 
-  statistic = CollaborativeFiltering.ModelStatistic()
+  statistic = Persa.ModelStatistic()
   push!(statistic, "error", errors_function)
   push!(statistic, "validation", errors_val)
 

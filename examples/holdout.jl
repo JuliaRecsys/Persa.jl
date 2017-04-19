@@ -1,13 +1,13 @@
 reload("Persa")
 cf = Persa
 
-ds = cf.MovieLens()
+ds = cf.createdummydataset()
 
 holdout = cf.HoldOut(ds, 0.9)
 
 (ds_train, ds_test) = cf.get(holdout)
 
-model = cf.SurpriseKNNWithMeans(ds_train; k = 60, min_k = 60)
+model = cf.GlobalMean(ds_train)
 
 cf.train!(model, ds_train)
 

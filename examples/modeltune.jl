@@ -2,7 +2,7 @@ reload("Persa")
 
 cf = Persa
 
-ds = cf.CiaoDVD()
+ds = cf.createdummydataset()
 
 holdout = cf.HoldOut(ds, 0.9)
 
