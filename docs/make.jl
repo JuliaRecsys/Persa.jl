@@ -6,3 +6,7 @@ makedocs(
     doctest = false,
     clean   = false
 )
+
+deploydocs(
+    repo = "github.com/filipebraida/Persa.jl.git"
+)
