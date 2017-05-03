@@ -77,9 +77,15 @@ sparsity(dataset::CFDatasetAbstract) = length(dataset) / (dataset.users * datase
 
 Base.copy{T<:CFDatasetAbstract}(dataset::T) = T(deepcopy(dataset.file), dataset.users, dataset.items, dataset.preferences)
 
-Base.length(dataset::CFDatasetAbstract) = size(dataset.file)[1]
-
 getMatrix(dataset::CFDatasetAbstract) = sparse(dataset.file[:user], dataset.file[:item], dataset.file[:rating], dataset.users, dataset.items)
+
+function Base.getindex(ds::CFDatasetAbstract, idx::Int, c::Colon)
+  return ds.file[find(r->r == idx, ds.file[:user]), [:item, :rating]]
+end
+
+function Base.getindex(ds::CFDatasetAbstract, c::Colon, idx::Int)
+  return ds.file[find(r->r == idx, ds.file[:item]), [:user, :rating]]
+end
 
 Base.getindex(ds::CFDatasetAbstract, idx) = (ds.file[:user][idx], ds.file[:item][idx], ds.file[:rating][idx])
 Base.getindex(ds::TimeCFDataset, idx) = (ds.file[:user][idx], ds.file[:item][idx], ds.file[:rating][idx], ds.file[:timestamp][idx])
