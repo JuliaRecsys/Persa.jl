@@ -86,6 +86,6 @@ Base.getindex(ds::TimeCFDataset, idx) = (ds.file[:user][idx], ds.file[:item][idx
 
 Base.start(ds::CFDatasetAbstract) = 1
 Base.done(ds::CFDatasetAbstract, state) = state > length(ds)
-Base.next(ds::CFDatasetAbstract, state) = ds.file[state], state + 1
+Base.next(ds::CFDatasetAbstract, state) = ds[state], state + 1
 
-Base.next(ds::TimeCFDataset, state) = ds.file[state], state + 1
+Base.next(ds::TimeCFDataset, state) = ds[state], state + 1
