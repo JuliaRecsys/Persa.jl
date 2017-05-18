@@ -9,9 +9,9 @@ holdout = cf.HoldOut(ds, 0.9)
 (ds_train, ds_test) = cf.get(holdout)
 
 function createmodel(dataset::cf.CFDatasetAbstract, features, lrate, lamda)
-  model = cf.SurpriseIRSVD(dataset; features = features)
+  model = cf.ImprovedRegularizedSVD(dataset, features)
 
-  cf.train!(model, dataset)
+  cf.train!(model, dataset; lambda = lamda, lrate = lrate)
 
   return model
 end
@@ -24,8 +24,8 @@ best_model, best_cfg, best_score = cf.modeltune(ds_train, createmodel,
 (features, lrate, lambda) = best_cfg
 
 
-model = cf.SurpriseIRSVD(ds_train; features = features, lrate = lrate, lambda = lambda)
+model = cf.ImprovedRegularizedSVD(ds_train, features)
 
-cf.train!(model, ds_train)
+cf.train!(model, ds_train; lrate = lrate, lambda = lambda)
 
 print(cf.aval(model, ds_test))
