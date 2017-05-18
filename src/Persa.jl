@@ -17,8 +17,6 @@ include("improvedRegularizedSVD.jl")
 include("globalMean.jl")
 include("userKNN.jl")
 
-include("surpriseMethods.jl")
-
 include("holdout.jl")
 
 include("experiments.jl")
