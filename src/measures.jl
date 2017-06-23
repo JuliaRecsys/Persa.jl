@@ -1,7 +1,7 @@
 using MLBase: roc, ROCNums
 
 #Mean absolute error (MAE)
-mae(labels, predicted) = mean(abs(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
+mae(labels, predicted) = mean(abs.(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
 
 #Root mean squared error (RMSE)
 function rmse(labels, predicted)
