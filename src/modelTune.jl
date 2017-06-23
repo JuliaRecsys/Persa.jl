@@ -1,4 +1,4 @@
-using MLBase: gridtune
+using MLBase: gridtune, Reverse
 using Compat: @compat
 
 function modeltune(dataset::CFDatasetAbstract, estfun::Function, params::@compat(Tuple{AbstractString, Any})...; verbose = true, k = 0.9, seed = NaN)
