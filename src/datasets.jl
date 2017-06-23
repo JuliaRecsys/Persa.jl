@@ -33,7 +33,7 @@ Base.eltype(preferences::RatingPreferences) = eltype(preferences.possibles)
 function Base.round{T}(rating::T, preferences::RatingPreferences{T})
   ratings = sort(preferences.possibles)
 
-  m = abs(rating .- ratings)
+  m = abs.(rating .- ratings)
 
   return ratings[find(r->r == minimum(m), m)[end]]
 end
