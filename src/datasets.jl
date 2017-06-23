@@ -2,20 +2,20 @@ using DataFrames
 
 abstract type CFDatasetAbstract;
 
-immutable RatingPreferences{T}
+struct RatingPreferences{T}
   possibles::Array{T, 1}
   min::T
   max::T
 end
 
-immutable TimeCFDataset <: CFDatasetAbstract
+struct TimeCFDataset <: CFDatasetAbstract
   file::DataFrame
   users::Int
   items::Int
   preferences::RatingPreferences
 end
 
-immutable CFDataset <: CFDatasetAbstract
+struct CFDataset <: CFDatasetAbstract
   file::DataFrame
   users::Int
   items::Int

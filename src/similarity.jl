@@ -1,4 +1,4 @@
-immutable Weight
+struct Weight
   value::Float64
   c::Bool
   intersect::Int

@@ -8,7 +8,7 @@ predict{T <: CFModel}(model::T, dataset::CFDatasetAbstract) = predict(model, dat
 
 predict{T <: CFModel}(model::T, data::DataFrame) = predict(model, Array(data))
 
-immutable ModelStatistic
+struct ModelStatistic
   e::Dict{String, Any}
 end
 

@@ -1,4 +1,4 @@
-immutable KFolds{T<:CFDatasetAbstract}
+struct KFolds{T<:CFDatasetAbstract}
     dataset::T
     index::Array
     k::Int

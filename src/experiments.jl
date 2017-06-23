@@ -1,11 +1,11 @@
 using DataFrames
 
-immutable Parameter
+struct Parameter
   name::String
   value::Any
 end
 
-immutable ParameterList
+struct ParameterList
   parameters::Array{Parameter}
 end
 
@@ -21,14 +21,14 @@ end
 
 Base.length(pl::ParameterList) = length(pl.parameters)
 
-immutable ExperimentResult{T <: CFMetrics}
+struct ExperimentResult{T <: CFMetrics}
   result::T
   parameters::ParameterList
 end
 
 ExperimentResult{T <: CFMetrics}(result::T, data...) = ExperimentResult(result, ParameterList(data...))
 
-immutable Experiments{T <: CFMetrics}
+struct Experiments{T <: CFMetrics}
   e::Array{ExperimentResult{T}}
 end
 

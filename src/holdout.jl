@@ -1,4 +1,4 @@
-immutable HoldOut{T<:CFDatasetAbstract}
+struct HoldOut{T<:CFDatasetAbstract}
     dataset::T
     index::Array
     k::Float64

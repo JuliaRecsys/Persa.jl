@@ -20,13 +20,13 @@ coverage(predicted) = length(find(r-> r > 0, predicted[:,1])) ./ length(predicte
 
 abstract type CFMetrics
 
-immutable AccuracyMeasures <: CFMetrics
+struct AccuracyMeasures <: CFMetrics
   mae::Float64
   rmse::Float64
   coverage::Float64
 end
 
-immutable DecisionMetrics <: CFMetrics
+struct DecisionMetrics <: CFMetrics
   roc::ROCNums
 end
 
@@ -34,7 +34,7 @@ AccuracyMeasures(labels::Array, predict::Array) = AccuracyMeasures(mae(labels, p
 
 DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(MLBase.roc(labels .>= threshold, predict .>= threshold))
 
-immutable ResultPredict <: CFMetrics
+struct ResultPredict <: CFMetrics
   accuracy::AccuracyMeasures
   decision::DecisionMetrics
 end
