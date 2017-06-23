@@ -1,4 +1,4 @@
-type GlobalMean <: CFModel
+mutable struct GlobalMean <: CFModel
   μ::Float64
 end
 

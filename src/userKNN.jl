@@ -1,4 +1,4 @@
-type UserKNN <: CFModel
+mutable struct  UserKNN <: CFModel
   b::Array{Float64,1}
   w::Similarity
   k::Int

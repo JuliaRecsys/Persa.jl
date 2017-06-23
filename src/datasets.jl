@@ -1,21 +1,23 @@
 using DataFrames
 
-abstract CFDatasetAbstract;
+abstract type CFDatasetAbstract
 
-immutable RatingPreferences{T}
+end
+
+struct RatingPreferences{T}
   possibles::Array{T, 1}
   min::T
   max::T
 end
 
-immutable TimeCFDataset <: CFDatasetAbstract
+struct TimeCFDataset <: CFDatasetAbstract
   file::DataFrame
   users::Int
   items::Int
   preferences::RatingPreferences
 end
 
-immutable CFDataset <: CFDatasetAbstract
+struct CFDataset <: CFDatasetAbstract
   file::DataFrame
   users::Int
   items::Int
@@ -31,7 +33,7 @@ Base.eltype(preferences::RatingPreferences) = eltype(preferences.possibles)
 function Base.round{T}(rating::T, preferences::RatingPreferences{T})
   ratings = sort(preferences.possibles)
 
-  m = abs(rating .- ratings)
+  m = abs.(rating .- ratings)
 
   return ratings[find(r->r == minimum(m), m)[end]]
 end

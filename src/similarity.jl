@@ -1,10 +1,10 @@
-immutable Weight
+struct Weight
   value::Float64
   c::Bool
   intersect::Int
 end
 
-type Similarity
+mutable struct Similarity
   w::Array{Weight,2}
   matrix::SparseMatrixCSC
   elements::Int

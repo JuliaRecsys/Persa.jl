@@ -1,7 +1,7 @@
-using MLBase
+using MLBase: roc, ROCNums, recall, precision, f1score
 
 #Mean absolute error (MAE)
-mae(labels, predicted) = mean(abs(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
+mae(labels, predicted) = mean(abs.(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
 
 #Root mean squared error (RMSE)
 function rmse(labels, predicted)
@@ -18,23 +18,25 @@ end
 #Coverage
 coverage(predicted) = length(find(r-> r > 0, predicted[:,1])) ./ length(predicted[:,1]);
 
-abstract CFMetrics
+abstract type CFMetrics
 
-immutable AccuracyMeasures <: CFMetrics
+end
+
+struct AccuracyMeasures <: CFMetrics
   mae::Float64
   rmse::Float64
   coverage::Float64
 end
 
-immutable DecisionMetrics <: CFMetrics
+struct DecisionMetrics <: CFMetrics
   roc::ROCNums
 end
 
 AccuracyMeasures(labels::Array, predict::Array) = AccuracyMeasures(mae(labels, predict), rmse(labels, predict), coverage(predict))
 
-DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(MLBase.roc(labels .>= threshold, predict .>= threshold))
+DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(roc(labels .>= threshold, predict .>= threshold))
 
-immutable ResultPredict <: CFMetrics
+struct ResultPredict <: CFMetrics
   accuracy::AccuracyMeasures
   decision::DecisionMetrics
 end
