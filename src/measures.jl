@@ -1,4 +1,4 @@
-using MLBase: roc, ROCNums
+using MLBase: roc, ROCNums, recall, precision, f1score
 
 #Mean absolute error (MAE)
 mae(labels, predicted) = mean(abs.(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
@@ -34,7 +34,7 @@ end
 
 AccuracyMeasures(labels::Array, predict::Array) = AccuracyMeasures(mae(labels, predict), rmse(labels, predict), coverage(predict))
 
-DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(MLBase.roc(labels .>= threshold, predict .>= threshold))
+DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(roc(labels .>= threshold, predict .>= threshold))
 
 struct ResultPredict <: CFMetrics
   accuracy::AccuracyMeasures
