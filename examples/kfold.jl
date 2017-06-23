@@ -1,12 +1,13 @@
-reload("Persa")
-cf = Persa
+using Persa
+using DatasetsCF
+using Surprise
 
-ds = cf.createdummydataset()
+ds = DatasetsCF.MovieLens()
 
-for (ds_train, ds_test) in cf.KFolds(ds, 10)
-  model = cf.ImprovedRegularizedSVD(ds_train)
+for (ds_train, ds_test) in Persa.KFolds(ds, 10)
+  model = Surprise.IRSVD(ds_train)
 
-  cf.train!(model, ds_train)
+  Persa.train!(model, ds_train)
 
-  print(cf.aval(model, ds_test, cf.recommendation(ds)))
+  print(Persa.aval(model, ds_test, Persa.recommendation(ds)))
 end

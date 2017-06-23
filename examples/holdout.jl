@@ -1,14 +1,13 @@
-reload("Persa")
-cf = Persa
+using Persa
 
-ds = cf.createdummydataset()
+ds = Persa.createdummydataset()
 
-holdout = cf.HoldOut(ds, 0.9)
+holdout = Persa.HoldOut(ds, 0.9)
 
-(ds_train, ds_test) = cf.get(holdout)
+(ds_train, ds_test) = Persa.get(holdout)
 
-model = cf.GlobalMean(ds_train)
+model = Persa.GlobalMean(ds_train)
 
-cf.train!(model, ds_train)
+Persa.train!(model, ds_train)
 
-print(cf.aval(model, ds_test, cf.recommendation(ds)))
+print(Persa.aval(model, ds_test, Persa.recommendation(ds)))
