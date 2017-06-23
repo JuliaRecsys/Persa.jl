@@ -1,4 +1,4 @@
-type RegularizedSVD <: CFModel
+mutable struct RegularizedSVD <: CFModel
   P::Array
   Q::Array
   preferences::RatingPreferences

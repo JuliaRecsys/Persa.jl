@@ -1,4 +1,4 @@
-type ImprovedRegularizedSVD <: CFModel
+mutable struct ImprovedRegularizedSVD <: CFModel
   μ::Float64
   bias_user::Array
   bias_item::Array
@@ -7,7 +7,7 @@ type ImprovedRegularizedSVD <: CFModel
   preferences::RatingPreferences
 end
 
-function ImprovedRegularizedSVD{T<:CFDatasetAbstract}(dataset::T, features::Int)
+function ImprovedRegularizedSVD(dataset::CFDatasetAbstract, features::Int)
   (result, -) = svds(getMatrix(dataset), nsv = features)
   U = result.U
   V = result.Vt
