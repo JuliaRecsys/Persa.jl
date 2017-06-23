@@ -10,6 +10,6 @@ makedocs(
 deploydocs(
     deps   = Deps.pip("pygments", "mkdocs", "mkdocs-material", "python-markdown-math"),
     repo = "github.com/filipebraida/Persa.jl.git",
-    julia = "0.5",
+    julia = "0.6",
     osname = "linux"
 )
