@@ -20,6 +20,8 @@ coverage(predicted) = length(find(r-> r > 0, predicted[:,1])) ./ length(predicte
 
 abstract type CFMetrics
 
+end
+
 struct AccuracyMeasures <: CFMetrics
   mae::Float64
   rmse::Float64

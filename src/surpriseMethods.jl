@@ -3,6 +3,8 @@ using PyCall
 
 abstract type SurpriseModel <: CFModel
 
+end
+
 type SurpriseKNNBasic <: SurpriseModel
   object::PyObject
   preferences::RatingPreferences
