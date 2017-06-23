@@ -1,4 +1,4 @@
-abstract CFModel;
+abstract type CFModel;
 
 function predict{T <: CFModel}(model::T, data::Array)
   [ canPredict(model, data[i,1], data[i,2]) ? predict(model, data[i,1], data[i,2]): NaN for i=1:size(data)[1]]

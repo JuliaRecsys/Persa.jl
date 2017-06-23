@@ -1,6 +1,6 @@
 using DataFrames
 
-abstract CFDatasetAbstract;
+abstract type CFDatasetAbstract;
 
 immutable RatingPreferences{T}
   possibles::Array{T, 1}

@@ -18,7 +18,7 @@ end
 #Coverage
 coverage(predicted) = length(find(r-> r > 0, predicted[:,1])) ./ length(predicted[:,1]);
 
-abstract CFMetrics
+abstract type CFMetrics
 
 immutable AccuracyMeasures <: CFMetrics
   mae::Float64

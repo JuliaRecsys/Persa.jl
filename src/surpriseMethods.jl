@@ -1,7 +1,7 @@
 using PyCall
 @pyimport surprise
 
-abstract SurpriseModel <: CFModel
+abstract type SurpriseModel <: CFModel
 
 type SurpriseKNNBasic <: SurpriseModel
   object::PyObject
