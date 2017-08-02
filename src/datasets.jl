@@ -25,11 +25,40 @@ struct CFDataset <: CFDatasetAbstract
 end
 
 RatingPreferences{T<:Real}(possibles::Array{T, 1}) = RatingPreferences(sort(possibles), minimum(possibles), maximum(possibles))
+
+"""
+    minimum(preferences::RatingPreferences)
+
+Return lower value of rating preferences.
+"""
 Base.minimum(preferences::RatingPreferences) = preferences.min
+
+"""
+    maximum(preferences::RatingPreferences)
+
+Return highest value of rating preferences.
+"""
 Base.maximum(preferences::RatingPreferences) = preferences.max
+
+"""
+    size(preferences::RatingPreferences)
+
+Return number of elements contained in the rating preferences.
+"""
 Base.size(preferences::RatingPreferences) = length(preferences.possibles)
+
+"""
+    eltype(preferences::RatingPreferences)
+
+Return rating type.
+"""
 Base.eltype(preferences::RatingPreferences) = eltype(preferences.possibles)
 
+"""
+    round{T}(rating::T, preferences::RatingPreferences{T})
+
+Returns the nearest integral value of the rating preferences.
+"""
 function Base.round{T}(rating::T, preferences::RatingPreferences{T})
   ratings = sort(preferences.possibles)
 
@@ -44,6 +73,12 @@ Base.round{T}(rating, preferences::RatingPreferences{T}) = Base.round(convert(T,
 recommendation(preferences::RatingPreferences) = maximum(preferences) - round(1/3 * (maximum(preferences) -  minimum(preferences)))
 recommendation(ds::CFDatasetAbstract) = recommendation(ds.preferences)
 
+"""
+    correct(rating::Real, preferences::RatingPreferences)
+
+Returns the correct value preserving the interval of rating
+preferences.
+"""
 function correct(rating::Real, preferences::RatingPreferences)
   if rating > maximum(preferences)
     return maximum(preferences)
@@ -73,6 +108,11 @@ function createdummydataset()::CFDatasetAbstract
   return Dataset(df)
 end
 
+"""
+    length(dataset::CFDatasetAbstract)
+
+Returns the number of ratings in the database.
+"""
 Base.length(dataset::CFDatasetAbstract) = size(dataset.file)[1]
 
 sparsity(dataset::CFDatasetAbstract) = length(dataset) / (dataset.users * dataset.items)
