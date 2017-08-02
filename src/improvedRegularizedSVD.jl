@@ -8,7 +8,7 @@ mutable struct ImprovedRegularizedSVD <: CFModel
 end
 
 function ImprovedRegularizedSVD(dataset::CFDatasetAbstract, features::Int)
-  (result, -) = svds(getMatrix(dataset), nsv = features)
+  (result, -) = svds(getmatrix(dataset), nsv = features)
   U = result.U
   V = result.Vt
 

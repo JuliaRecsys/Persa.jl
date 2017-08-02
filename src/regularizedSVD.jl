@@ -5,7 +5,7 @@ mutable struct RegularizedSVD <: CFModel
 end
 
 function RegularizedSVD{T<:CFDatasetAbstract}(dataset::T, features::Int)
-  (result, -) = svds(getMatrix(dataset), nsv = features)
+  (result, -) = svds(getmatrix(dataset), nsv = features)
   U = result.U
   V = result.Vt
 
@@ -25,7 +25,7 @@ function train!{T<:CFDatasetAbstract}(model::RegularizedSVD,
 
   features = size(model.P)[2];
 
-  matrix = getMatrix(dataset)
+  matrix = getmatrix(dataset)
 
   (users_idx, items_idx) = ind2sub(size(matrix), find(r-> r != 0, matrix));
 
