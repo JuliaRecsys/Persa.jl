@@ -59,28 +59,34 @@ function histogram_global(ds::Persa.CFDatasetAbstract)
 end
 
 function histogram_user(ds::Persa.CFDatasetAbstract)
-  hist = Dict{Int64, Int64}()
+  hist = Dict{Int64, Dict{eltype(ds.preferences), Int64}}()
 
   for i = 1:ds.users
-    hist[i] = 0
+    hist[i] = Dict{eltype(ds.preferences), Int64}()
+    for j in Persa.possiblesratings(ds)
+      hist[i][j] = 0
+    end
   end
 
   for (u, v, r) in ds
-    hist[u] += 1
+    hist[u][r] += 1
   end
 
   return hist
 end
 
 function histogram_item(ds::Persa.CFDatasetAbstract)
-  hist = Dict{Int64, Int64}()
+  hist = Dict{Int64, Dict{eltype(ds.preferences), Int64}}()
 
   for i = 1:ds.items
-    hist[i] = 0
+    hist[i] = Dict{eltype(ds.preferences), Int64}()
+    for j in Persa.possiblesratings(ds)
+      hist[i][j] = 0
+    end
   end
 
   for (u, v, r) in ds
-    hist[v] += 1
+    hist[v][r] += 1
   end
 
   return hist
