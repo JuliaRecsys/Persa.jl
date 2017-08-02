@@ -14,7 +14,7 @@ end
 
 predict(model::RegularizedSVD, user::Int, item::Int) = correct(model.P[user, :] ⋅ model.Q[item, :], model.preferences)
 
-canPredict(model::RegularizedSVD, user::Int, item::Int) = true
+canpredict(model::RegularizedSVD, user::Int, item::Int) = true
 
 function train!{T<:CFDatasetAbstract}(model::RegularizedSVD,
                 dataset::T;

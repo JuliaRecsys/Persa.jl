@@ -8,4 +8,4 @@ train!{T<:CFDatasetAbstract}(model::GlobalMean, dataset::T)::ModelStatistic = Mo
 
 predict(model::GlobalMean, user::Int, item::Int) = model.μ
 
-canPredict(model::GlobalMean, user::Int, item::Int) = true
+canpredict(model::GlobalMean, user::Int, item::Int) = true
