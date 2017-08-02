@@ -29,6 +29,8 @@ Base.minimum(preferences::RatingPreferences) = preferences.min
 Base.maximum(preferences::RatingPreferences) = preferences.max
 Base.size(preferences::RatingPreferences) = length(preferences.possibles)
 Base.eltype(preferences::RatingPreferences) = eltype(preferences.possibles)
+possiblesratings(preferences::RatingPreferences) = preferences.possibles
+possiblesratings(ds::CFDatasetAbstract) = possiblesratings(ds.preferences)
 
 function Base.round{T}(rating::T, preferences::RatingPreferences{T})
   ratings = sort(preferences.possibles)
