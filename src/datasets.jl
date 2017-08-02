@@ -53,6 +53,7 @@ Base.size(preferences::RatingPreferences) = length(preferences.possibles)
 Return rating type.
 """
 Base.eltype(preferences::RatingPreferences) = eltype(preferences.possibles)
+
 possiblesratings(preferences::RatingPreferences) = preferences.possibles
 possiblesratings(ds::CFDatasetAbstract) = possiblesratings(ds.preferences)
 
