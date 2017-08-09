@@ -1,6 +1,16 @@
-Base.mean{T<:CFDatasetAbstract}(dataset::T) = mean(dataset.file[:rating])
+Base.mean(dataset::CFDatasetAbstract) = mean(dataset.file[:rating])
 
-function shrunkUserMean(dataset::CFDatasetAbstract, α::Int)
+function means(dataset::CFDatasetAbstract; mode::Symbol = :user, α::Int = 0)
+    @assert in(mode, [:user, :item]) "Incorrect mode. Use :user or :item"
+
+    if mode == :user
+      return meansusers(dataset, α)
+    else
+      return meansitems(dataset, α)
+    end
+end
+
+function meansusers(dataset::CFDatasetAbstract, α::Int)
   b = zeros(Float64, dataset.users)
 
   matrix = getmatrix(dataset)
@@ -10,13 +20,21 @@ function shrunkUserMean(dataset::CFDatasetAbstract, α::Int)
   for i=1:dataset.users
     index = find(r->r != 0, matrix[i, :])
 
-    b[i,1] = ((α * μ) / (α * length(index))) + (length(index) * mean(matrix[i, index]) / (α + length(index)))
+    if length(index) == 0
+        b[i,1] = μ
+    else
+        if α == 0
+            b[i,1] = (length(index) * mean(matrix[i, index]) / (α + length(index)))
+        else
+            b[i,1] = ((α * μ) / (α + length(index))) + (length(index) * mean(matrix[i, index]) / (α + length(index)))
+        end
+    end
   end
 
   return b
 end
 
-function shrunkItemMean(dataset::CFDatasetAbstract, α::Int)
+function meansitems(dataset::CFDatasetAbstract, α::Int)
   b = zeros(Float64, dataset.items)
 
   matrix = getmatrix(dataset)
@@ -26,11 +44,22 @@ function shrunkItemMean(dataset::CFDatasetAbstract, α::Int)
   for i=1:dataset.items
     index = find(r->r != 0, matrix[:, i])
 
-    b[i,1] = ((α * μ) / (α * length(index))) + (length(index) * mean(matrix[index, i]) / (α + length(index)))
+    if length(index) == 0
+        b[i,1] = μ
+    else
+        if α == 0
+            b[i,1] = (length(index) * mean(matrix[index, i]) / (α + length(index)))
+        else
+            b[i,1] = ((α * μ) / (α + length(index))) + (length(index) * mean(matrix[index, i]) / (α + length(index)))
+        end
+    end
   end
 
   return b
 end
+
+@deprecate shrunkItemMean(dataset::CFDatasetAbstract, α::Int) meansitems(dataset, α)
+@deprecate shrunkUserMean(dataset::CFDatasetAbstract, α::Int) meansusers(dataset, α)
 
 function histogram(ds::Persa.CFDatasetAbstract; mode::Symbol = :global)
   @assert in(mode, [:user, :item, :global]) "Incorrect mode. Use :user, :item or :global."
