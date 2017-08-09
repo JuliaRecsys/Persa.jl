@@ -33,7 +33,7 @@ function Similarity{T<:CFDatasetAbstract}(dataset::T, k::Int; γ = 10)
       w[i,i] = Weight(NaN, true, false)
   end
 
-  matrix = getMatrix(dataset)
+  matrix = getmatrix(dataset)
 
   return Similarity(w, matrix, elements, fill(false, elements), k, γ)
 end

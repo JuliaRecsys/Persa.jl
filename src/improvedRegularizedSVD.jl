@@ -8,7 +8,7 @@ mutable struct ImprovedRegularizedSVD <: CFModel
 end
 
 function ImprovedRegularizedSVD(dataset::CFDatasetAbstract, features::Int)
-  (result, -) = svds(getMatrix(dataset), nsv = features)
+  (result, -) = svds(getmatrix(dataset), nsv = features)
   U = result.U
   V = result.Vt
 
@@ -17,7 +17,7 @@ end
 
 predict(model::ImprovedRegularizedSVD, user::Int, item::Int) = correct(model.μ + model.bias_user[user] + model.bias_item[item] + model.P[user, :] ⋅ model.Q[item, :], model.preferences)
 
-canPredict(model::ImprovedRegularizedSVD, user::Int, item::Int) = true
+canpredict(model::ImprovedRegularizedSVD, user::Int, item::Int) = true
 
 function update!{T<:CFDatasetAbstract}(model::ImprovedRegularizedSVD, dataset::T, lrate::Float64, lambda::Float64)
 

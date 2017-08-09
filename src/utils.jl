@@ -3,7 +3,7 @@ Base.mean{T<:CFDatasetAbstract}(dataset::T) = mean(dataset.file[:rating])
 function shrunkUserMean(dataset::CFDatasetAbstract, α::Int)
   b = zeros(Float64, dataset.users)
 
-  matrix = getMatrix(dataset)
+  matrix = getmatrix(dataset)
 
   μ = mean(dataset)
 
@@ -19,7 +19,7 @@ end
 function shrunkItemMean(dataset::CFDatasetAbstract, α::Int)
   b = zeros(Float64, dataset.items)
 
-  matrix = getMatrix(dataset)
+  matrix = getmatrix(dataset)
 
   μ = mean(dataset)
 

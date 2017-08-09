@@ -30,7 +30,7 @@ function predict(model::UserKNN, user::Int, item::Int)
   return correct((r ./ total) + model.b[user], model.preferences)
 end
 
-function canPredict(model::UserKNN, user::Int, item::Int)
+function canpredict(model::UserKNN, user::Int, item::Int)
   neighbours = getWeights(model.w, user, item)
 
   if length(neighbours) >= model.k
