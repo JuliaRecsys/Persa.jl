@@ -1,3 +1,5 @@
+using Base: depwarn
+
 abstract type CFModel
 
 end
@@ -17,3 +19,10 @@ end
 ModelStatistic() = ModelStatistic(Dict{String, Any}())
 
 push!(statistic::ModelStatistic, key::String, value::Any) = statistic.e[key] = value
+
+function canpredict(model::CFModel, user::Int, item::Int)
+    depwarn("canPredict is deprecated, use canPredict instead.", :canPredict)
+    canPredict(model, user, item)
+end
+
+@deprecate canPredict(model::CFModel, user::Int, item::Int) canpredict(model, user, item)
