@@ -81,6 +81,8 @@ Base.copy{T<:CFDatasetAbstract}(dataset::T) = T(deepcopy(dataset.file), dataset.
 
 getmatrix(dataset::CFDatasetAbstract) = sparse(dataset.file[:user], dataset.file[:item], dataset.file[:rating], dataset.users, dataset.items)
 
+@deprecate getMatrix(dataset::CFDatasetAbstract) getmatrix(dataset)
+
 function Base.getindex(ds::CFDatasetAbstract, idx::Int, c::Colon)
   return ds.file[find(r->r == idx, ds.file[:user]), [:item, :rating]]
 end
