@@ -6,13 +6,6 @@ Return global mean of collaborative filtering dataset.
 Base.mean(dataset::CFDatasetAbstract) = mean(dataset.file[:rating])
 
 """
-    mean(dataset::CFDatasetAbstract)
-
-Return global mean of collaborative filtering dataset.
-"""
-mean(dataset::CFDatasetAbstract) = mean(dataset)
-
-"""
     means(dataset::CFDatasetAbstract; mode::Symbol = :user, α::Int = 0)
 
 Return mean of each user/item.
