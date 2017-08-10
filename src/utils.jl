@@ -1,5 +1,28 @@
+"""
+    Base.mean(dataset::CFDatasetAbstract)
+
+Return global mean of collaborative filtering dataset.
+"""
 Base.mean(dataset::CFDatasetAbstract) = mean(dataset.file[:rating])
 
+"""
+    mean(dataset::CFDatasetAbstract)
+
+Return global mean of collaborative filtering dataset.
+"""
+mean(dataset::CFDatasetAbstract) = mean(dataset)
+
+"""
+    means(dataset::CFDatasetAbstract; mode::Symbol = :user, α::Int = 0)
+
+Return mean of each user/item.
+
+# Arguments
+- `mode::Symbol = :user`: The mode of mean.Whether the calculation will be per
+  user or per item. Values [:user, :item].
+- `α::Int = 0`: Shrinkage value. Shrinkage is a interpolation factor between an
+  estimate computed from data and a global mean.
+"""
 function means(dataset::CFDatasetAbstract; mode::Symbol = :user, α::Int = 0)
     @assert in(mode, [:user, :item]) "Incorrect mode. Use :user or :item"
 
