@@ -10,12 +10,8 @@ include("kfolds.jl")
 include("measures.jl")
 
 include("utils.jl")
-include("similarity.jl")
 
-include("regularizedSVD.jl")
-include("improvedRegularizedSVD.jl")
 include("globalMean.jl")
-include("userKNN.jl")
 
 include("holdout.jl")
 
