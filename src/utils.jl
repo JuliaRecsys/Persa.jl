@@ -11,7 +11,7 @@ Base.mean(dataset::CFDatasetAbstract) = mean(dataset.file[:rating])
 Return mean of each user/item.
 
 # Arguments
-- `mode::Symbol = :user`: The mode of mean.Whether the calculation will be per
+- `mode::Symbol = :user`: The mode of mean. Whether the calculation will be per
   user or per item. Values [:user, :item].
 - `α::Int = 0`: Shrinkage value. Shrinkage is a interpolation factor between an
   estimate computed from data and a global mean.
@@ -77,6 +77,15 @@ end
 @deprecate shrunkItemMean(dataset::CFDatasetAbstract, α::Int) meansitems(dataset, α)
 @deprecate shrunkUserMean(dataset::CFDatasetAbstract, α::Int) meansusers(dataset, α)
 
+"""
+    histogram(ds::Persa.CFDatasetAbstract; mode::Symbol = :global)
+
+Return ratings histogram.
+
+# Arguments
+- `mode::Symbol = :global`: The mode of histogram. Whether the calculation will
+  be per user, per item or global. Values [:user, :item, :global].
+"""
 function histogram(ds::Persa.CFDatasetAbstract; mode::Symbol = :global)
   @assert in(mode, [:user, :item, :global]) "Incorrect mode. Use :user, :item or :global."
 
