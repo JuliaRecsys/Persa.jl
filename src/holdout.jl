@@ -5,11 +5,6 @@ struct HoldOut{T<:CFDatasetAbstract}
     T
 end
 
-function HoldOut{T<:CFDatasetAbstract}(dataset::T, margin::Float64, seed::Int)
-  srand(seed);
-  HoldOut(dataset, shuffle(collect(1:length(dataset))), margin, T)
-end
-
 HoldOut{T<:CFDatasetAbstract}(dataset::T, margin::Float64) = HoldOut(dataset, shuffle(collect(1:length(dataset))), margin, T)
 
 get(holdout::HoldOut) = (getTrainData(holdout), getTestData(holdout))
