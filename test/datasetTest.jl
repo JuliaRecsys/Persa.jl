@@ -34,6 +34,9 @@
           @test length(ds_train) != size(ds_test)[1]
           @test length(ds) != size(ds_test)[1]
         end
+
+        kfold = Persa.KFolds(ds, 10)
+        @test length(kfold) == 10
     end
 
     @testset "Rating Preferences" begin
