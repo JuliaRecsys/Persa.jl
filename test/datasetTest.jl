@@ -54,6 +54,9 @@
         @test Persa.recommendation(ds_train) == 4.0
         @test Persa.recommendation(ds_train.preferences) == 4.0
         @test Persa.recommendation(ds_train.preferences) == Persa.recommendation(ds_train)
+
+        @test Persa.correct(Inf, ds_train.preferences) == ds.preferences.max
+        @test Persa.correct(-Inf, ds_train.preferences) == ds.preferences.min
     end
 
     @testset "Interfaces" begin
@@ -70,5 +73,15 @@
         (m, n) = size(matrix)
         @test m == ds_train.users
         @test n == ds_train.items
+    end
+
+    @testset "Others" begin
+        ds_copy = copy(ds)
+        @test ds_copy !== copy
+        @test ds_copy.preferences === ds.preferences
+        @test ds.file !== ds_copy.file
+        @test ds.users == ds_copy.users
+        @test ds.items == ds_copy.items
+        @test length(ds.file) == length(ds_copy.file)
     end
 end
