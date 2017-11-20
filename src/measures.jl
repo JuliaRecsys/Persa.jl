@@ -96,16 +96,16 @@ function DataFrame(result::AccuracyMeasures)
 end
 
 function Base.print(result::DecisionMetrics)
-  println("Recall - $(recall(result.roc))")
-  println("Precision - $(precision(result.roc))")
-  println("F1-Score - $(f1score(result.roc))")
+  println("Recall - $(recall(result))")
+  println("Precision - $(precision(result))")
+  println("F1-Score - $(f1score(result))")
 end
 
 function DataFrame(result::DecisionMetrics)
   df = DataFrame()
-  df[:recall] = recall(result.roc)
-  df[:precision] = precision(result.roc)
-  df[:f1score] = f1score(result.roc)
+  df[:recall] = recall(result)
+  df[:precision] = precision(result)
+  df[:f1score] = f1score(result)
   return df
 end
 
