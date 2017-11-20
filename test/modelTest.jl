@@ -35,6 +35,8 @@
         @test print(measures.accuracy) == nothing
         @test print(measures.decision) == nothing
 
+        @test typeof(Persa.DataFrame(measures)) == DataFrames.DataFrame
+
         df = Persa.DataFrame(measures)
 
         @test length(df) == 6
