@@ -1,4 +1,4 @@
-using MLBase: roc, ROCNums
+using MLBase
 
 #Mean absolute error (MAE)
 mae(labels, predicted) = mean(abs.(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
@@ -29,7 +29,7 @@ struct AccuracyMeasures <: CFMetrics
 end
 
 struct DecisionMetrics <: CFMetrics
-  roc::ROCNums
+  roc::MLBase.ROCNums
 end
 
 AccuracyMeasures(labels::Array, predict::Array) = AccuracyMeasures(mae(labels, predict), rmse(labels, predict), coverage(predict))
