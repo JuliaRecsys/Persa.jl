@@ -12,14 +12,6 @@ predict{T <: CFModel}(model::T, dataset::CFDatasetAbstract) = predict(model, dat
 
 predict{T <: CFModel}(model::T, data::DataFrame) = predict(model, Array(data))
 
-struct ModelStatistic
-  e::Dict{String, Any}
-end
-
-ModelStatistic() = ModelStatistic(Dict{String, Any}())
-
-push!(statistic::ModelStatistic, key::String, value::Any) = statistic.e[key] = value
-
 function canpredict(model::CFModel, user::Int, item::Int)
     depwarn("canPredict is deprecated, use canPredict instead.", :canPredict)
     canPredict(model, user, item)

@@ -15,6 +15,4 @@ include("globalMean.jl")
 
 include("holdout.jl")
 
-include("experiments.jl")
-
 end # module
