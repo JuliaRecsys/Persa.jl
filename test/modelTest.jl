@@ -12,6 +12,7 @@
         @test model.μ == μ
         @test Persa.predict(model, 1, 1) == μ
         @test length(Persa.predict(model, ds_test)) == size(ds_test)[1]
+        @test length(Persa.predict(model, ds_train)) == length(ds_train)
     end
 
     @testset "Measures" begin
