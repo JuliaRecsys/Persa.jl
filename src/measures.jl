@@ -1,4 +1,4 @@
-using MLBase: roc, ROCNums, recall, precision, f1score
+using MLBase: roc, ROCNums
 
 #Mean absolute error (MAE)
 mae(labels, predicted) = mean(abs.(predicted[find(r -> r > 0, predicted),1] - labels[find(r -> r > 0, predicted),1]));
@@ -40,6 +40,10 @@ coverage(measures::AccuracyMeasures) = measures.coverage
 
 DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(roc(labels .>= threshold, predict .>= threshold))
 
+recall(measures::DecisionMetrics) = MLBase.recall(measures.roc)
+precision(measures::DecisionMetrics) = MLBase.precision(measures.roc)
+f1score(measures::DecisionMetrics) = MLBase.f1score(measures.roc)
+
 struct ResultPredict <: CFMetrics
   accuracy::AccuracyMeasures
   decision::DecisionMetrics
@@ -52,6 +56,14 @@ function ResultPredict(model::CFModel, data_test::Array, threshold::Number)
 
   return ResultPredict(acc, dec)
 end
+
+mae(measures::ResultPredict) = mae(measures.accuracy)
+rmse(measures::ResultPredict) = rmse(measures.accuracy)
+coverage(measures::ResultPredict) = coverage(measures.accuracy)
+
+recall(measures::ResultPredict) = recall(measures.decision)
+precision(measures::ResultPredict) = precision(measures.decision)
+f1score(measures::ResultPredict) = f1score(measures.decision)
 
 function AccuracyMeasures(model::CFModel, data_test::Array)
   predicted = predict(model, data_test)
@@ -71,8 +83,8 @@ DataFrame(result::ResultPredict) = hcat(DataFrame(result.accuracy), DataFrame(re
 
 function Base.print(result::AccuracyMeasures)
   println("MAE - $(mae(result))")
-  println("RMSE - $(rmse(result.rmse))")
-  println("Coverage - $(coverage(result.coverage))")
+  println("RMSE - $(rmse(result))")
+  println("Coverage - $(coverage(result))")
 end
 
 function DataFrame(result::AccuracyMeasures)
