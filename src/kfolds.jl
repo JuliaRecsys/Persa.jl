@@ -7,11 +7,6 @@ end
 
 KFolds{T<:CFDatasetAbstract}(dataset::T, k::Int) = KFolds(dataset, splitKFold(length(dataset), k), k, T)
 
-function KFolds{T<:CFDatasetAbstract}(dataset::T, k::Int, seed::Int)
-  srand(seed)
-  KFolds(dataset, splitKFold(length(dataset), k), k, T)
-end
-
 getTrainIndex(kfold::KFolds, fold::Int) = find(r -> r != fold, kfold.index)
 getTestIndex(kfold::KFolds, fold::Int) = find(r -> r == fold, kfold.index)
 

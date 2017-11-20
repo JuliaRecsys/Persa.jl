@@ -1,8 +1,6 @@
 using DataFrames
 
-abstract type CFDatasetAbstract
-
-end
+abstract type CFDatasetAbstract end
 
 struct RatingPreferences{T}
   possibles::Array{T, 1}
