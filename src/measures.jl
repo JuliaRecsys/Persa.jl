@@ -34,6 +34,10 @@ end
 
 AccuracyMeasures(labels::Array, predict::Array) = AccuracyMeasures(mae(labels, predict), rmse(labels, predict), coverage(predict))
 
+mae(measures::AccuracyMeasures) = measures.mae
+rmse(measures::AccuracyMeasures) = measures.rmse
+coverage(measures::AccuracyMeasures) = measures.coverage
+
 DecisionMetrics(labels::Array, predict::Array, threshold::Number) = DecisionMetrics(roc(labels .>= threshold, predict .>= threshold))
 
 struct ResultPredict <: CFMetrics
@@ -66,9 +70,9 @@ end
 DataFrame(result::ResultPredict) = hcat(DataFrame(result.accuracy), DataFrame(result.decision))
 
 function Base.print(result::AccuracyMeasures)
-  println("MAE - $(result.mae)")
-  println("RMSE - $(result.rmse)")
-  println("Coverage - $(result.coverage)")
+  println("MAE - $(mae(result))")
+  println("RMSE - $(rmse(result.rmse))")
+  println("Coverage - $(coverage(result.coverage))")
 end
 
 function DataFrame(result::AccuracyMeasures)
