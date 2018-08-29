@@ -1,4 +1,1 @@
-julia 0.6
-DataFrames
-MLBase
-Distances
+julia 1.0
