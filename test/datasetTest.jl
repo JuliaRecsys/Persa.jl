@@ -47,5 +47,21 @@
             (user, item, rating) = dataset2[i]
             @test dataset2[user, item] == rating
         end
+
+        matrix = Array(dataset1)
+
+        for user in 1:Persa.users(dataset1)
+            for item in 1:Persa.items(dataset1)
+                @test Persa.value(dataset1[user, item]) === matrix[user, item]
+            end
+        end
+
+        matrix = Array(dataset2)
+
+        for user in 1:Persa.users(dataset2)
+            for item in 1:Persa.items(dataset2)
+                @test Persa.value(dataset2[user, item]) === matrix[user, item]
+            end
+        end
     end
 end
