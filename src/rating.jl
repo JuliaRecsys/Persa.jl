@@ -29,12 +29,12 @@ end
 Base.:+(r1::Rating{T}, r2::Rating{T}) where {T <: Number} = Rating(value(r1) + value(r2), r1.preference)
 Base.:+(r1::MissingRating{T}, r2::Rating{T}) where {T <: Number} = Rating(value(r2), r2.preference)
 Base.:+(r1::Rating{T}, r2::MissingRating{T}) where {T <: Number} = Rating(value(r1), r1.preference)
-Base.:+(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating()
+Base.:+(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating{T}()
 
 Base.:-(r1::Rating{T}, r2::Rating{T}) where {T <: Number} = Rating(value(r1) - value(r2), r1.preference)
 Base.:-(r1::MissingRating{T}, r2::Rating{T}) where {T <: Number} = Rating(value(r2), r2.preference)
 Base.:-(r1::Rating{T}, r2::MissingRating{T}) where {T <: Number} = Rating(value(r1), r1.preference)
-Base.:-(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating()
+Base.:-(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating{T}()
 
 Base.:+(r1::Rating{T}, x::Number) where {T <: Number} = value(r1) + x
 Base.:-(r1::Rating{T}, x::Number) where {T <: Number} = value(r1) - x
