@@ -16,8 +16,8 @@
         @test Persa.users(dataset2) == 10
         @test Persa.items(dataset2) == 10
 
-        @test Persa.size(dataset1) == [7 6]
-        @test Persa.size(dataset2) == [10 10]
+        @test Persa.size(dataset1) == (7, 6)
+        @test Persa.size(dataset2) == (10, 10)
 
         @test Persa.length(dataset1) == 35
         @test Persa.length(dataset2) == 35

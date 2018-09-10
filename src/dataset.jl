@@ -28,7 +28,7 @@ Dataset(df::DataFrame) = Dataset(df, maximum(df[:user]), maximum(df[:item]))
 users(dataset::Dataset) = dataset.users
 items(dataset::Dataset) = dataset.items
 
-Base.size(dataset::Dataset) = [users(dataset) items(dataset)]
+Base.size(dataset::Dataset) = (users(dataset), items(dataset))
 Base.length(dataset::Dataset) = length(nonzeros(dataset.ratings))
 
 function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing, T}} where T <: Number
