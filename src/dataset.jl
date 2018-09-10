@@ -32,7 +32,7 @@ Base.size(dataset::Dataset) = [users(dataset) items(dataset)]
 Base.length(dataset::Dataset) = length(nonzeros(dataset.ratings))
 
 function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing, T}} where T <: Number
-    matrix = Array{Union{Missing, T}}(missing, users(dataset), items(dataset))
+    matrix = Array{Union{Missing, T}}(missing, Persa.users(dataset), Persa.items(dataset))
 
     users = rowvals(dataset.ratings)
     ratings = nonzeros(dataset.ratings)
