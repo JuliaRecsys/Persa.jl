@@ -74,3 +74,5 @@ function Base.getindex(dataset::Dataset, i::Int)::Tuple{Int, Int, Rating}
         end
     end
 end
+
+Base.iterate(dataset::Dataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)

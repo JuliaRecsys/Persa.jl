@@ -64,4 +64,14 @@
             end
         end
     end
+
+    @testset "Interator Tests" begin
+        for (user, item, rating) in dataset1
+            @test dataset1[user, item] == rating
+        end
+
+        for (user, item, rating) in dataset2
+            @test dataset2[user, item] == rating
+        end
+    end
 end
