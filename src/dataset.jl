@@ -75,4 +75,14 @@ function Base.getindex(dataset::Dataset, i::Int)::Tuple{Int, Int, Rating}
     end
 end
 
+function Base.getindex(dataset::Dataset, user::Int, c::Colon)
+    elements = collect(dataset.ratings[user, :])
+    return [(idx, elements[idx]) for idx in findall(!isnan, elements)]
+end
+
+function Base.getindex(dataset::Dataset, c::Colon, item::Int)
+    elements = collect(dataset.ratings[:, item])
+    return [(idx, elements[idx]) for idx in findall(!isnan, elements)]
+end
+
 Base.iterate(dataset::Dataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
