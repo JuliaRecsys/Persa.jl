@@ -18,4 +18,5 @@ function createdummydatasettwo()
     return df
 end
 
+include("ratingTest.jl")
 include("datasetTest.jl")
