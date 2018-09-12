@@ -3,6 +3,7 @@ using SparseArrays
 
 struct Dataset{T <: Number}
     ratings::SparseMatrixCSC{AbstractRating{T}, Int}
+    preference::Preference{T}
     users::Int
     items::Int
 end
@@ -16,11 +17,13 @@ function Dataset(df::DataFrame, users::Int, items::Int)
         throw(ArgumentError("users or items must satisfy maximum[df[:k]] >= k"))
     end
 
-    ratings = convert(df[:rating])
+    preference = Preference(df[:rating])
+
+    ratings = convert(df[:rating], preference)
 
     matriz = sparse(df[:user], df[:item], ratings, users, items)
 
-    return Dataset(matriz, users, items)
+    return Dataset(matriz, preference, users, items)
 end
 
 Dataset(df::DataFrame) = Dataset(df, maximum(df[:user]), maximum(df[:item]))

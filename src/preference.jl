@@ -34,16 +34,16 @@ Base.eltype(preference::Preference) = eltype(preference.possibles)
     round{T}(rating::T, preference::Preference{T})
 Returns the nearest integral value of the rating preferences.
 """
-function Base.round(rating::T, Preference::Preference{T}) where T
+function Base.round(rating::T, preference::Preference{T}) where T
   ratings = sort(preference.possibles)
 
   m = abs.(rating .- ratings)
 
-  return ratings[find(r->r == minimum(m), m)[end]]
+  return ratings[findall(r->r == minimum(m), m)[end]]
 end
 
-Base.round(rating::Float64, preference::Preference{Int}) = Base.round(convert(Int, round(rating)), preference)
-Base.round(rating, preference::Preference{T}) where T = Base.round(convert(T, rating), preference)
+Base.round(rating::Float64, preference::Preference{Int}) = Base.round(Base.convert(Int, round(rating)), preference)
+Base.round(rating, preference::Preference{T}) where T = Base.round(Base.convert(T, rating), preference)
 
 """
     correct(rating::Real, preference::Preference)
