@@ -45,6 +45,13 @@ Base.:-(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = value
 Base.:-(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating{T}()
 
 Base.:+(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) + x
+Base.:+(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) + x
+
 Base.:-(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) - x
+Base.:-(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) - x
+
 Base.:*(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) * x
+Base.:*(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) * x
+
 Base.:/(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) / x
+Base.:/(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) / x

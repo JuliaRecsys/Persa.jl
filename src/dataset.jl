@@ -1,5 +1,6 @@
 using DataFrames
 using SparseArrays
+using Statistics
 
 struct Dataset{T <: Number}
     ratings::SparseMatrixCSC{AbstractRating{T}, Int}
@@ -89,3 +90,15 @@ function Base.getindex(dataset::Dataset, c::Colon, item::Int)
 end
 
 Base.iterate(dataset::Dataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
+
+function Statistics.mean(dataset::Dataset)
+    μ = 0
+    total = 0
+    for (u, v, r) in dataset
+        if !isnan(r)
+            μ += r
+            total += 1
+        end
+    end
+    return μ ./ total
+end
