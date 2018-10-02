@@ -4,5 +4,6 @@ module Persa
 include("preference.jl")
 include("rating.jl")
 include("dataset.jl")
+include("learn.jl")
 
 end # module
