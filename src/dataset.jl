@@ -9,6 +9,18 @@ struct Dataset{T <: Number}
     items::Int
 end
 
+struct UserPreference
+    user::Int
+    item::Int
+    rating::AbstractRating
+end
+
+user(x::UserPreference) = x.user
+item(x::UserPreference) = x.item
+rating(x::UserPreference) = x.rating
+
+Base.iterate(p::UserPreference, state=1) = length(fieldnames(typeof(p))) < state ? nothing : (getfield(p, state), state+1)
+
 function Dataset(df::DataFrame, users::Int, items::Int)
     @assert in(:user, names(df))
     @assert in(:item, names(df))
@@ -61,7 +73,7 @@ function Base.getindex(dataset::Dataset, user::Int, item::Int)::AbstractRating
     dataset.ratings[user, item]
 end
 
-function Base.getindex(dataset::Dataset, i::Int)::Tuple{Int, Int, AbstractRating}
+function Base.getindex(dataset::Dataset, i::Int)::UserPreference
     if i > length(dataset)
         throw(ArgumentError("index must satisfy 1 <= i <= length(dataset)"))
     end
@@ -74,7 +86,7 @@ function Base.getindex(dataset::Dataset, i::Int)::Tuple{Int, Int, AbstractRating
             user = users[i]
             rating = ratings[i]
 
-            return (user, item, rating)
+            return UserPreference(user, item, rating)
         end
     end
 end
@@ -90,7 +102,7 @@ function Base.getindex(dataset::Dataset, c::Colon, item::Int)
 end
 
 function Base.getindex(dataset::Dataset, index::Vector{Int})
-    elements = Vector{Tuple{Int, Int, AbstractRating}}(undef, length(index))
+    elements = Vector{UserPreference}(undef, length(index))
 
     for i = 1:length(index)
         elements[i] = dataset[index[i]]
