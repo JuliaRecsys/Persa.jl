@@ -9,17 +9,19 @@ struct Dataset{T <: Number}
     items::Int
 end
 
-struct UserPreference
+struct UserPreference{T}
     user::Int
     item::Int
-    rating::AbstractRating
+    rating::AbstractRating{T}
 end
 
 user(x::UserPreference) = x.user
 item(x::UserPreference) = x.item
 rating(x::UserPreference) = x.rating
 
-Base.iterate(p::UserPreference, state=1) = length(fieldnames(typeof(p))) < state ? nothing : (getfield(p, state), state+1)
+Base.iterate(p::UserPreference, state=1) = length(fieldnames(typeof(p))) < state ? nothing : (p[state], state+1)
+
+Base.getindex(p::UserPreference{T}, i::Int) where T = length(fieldnames(typeof(p))) < i ? nothing : getfield(p, i)
 
 function Dataset(df::DataFrame, users::Int, items::Int)
     @assert in(:user, names(df))
@@ -35,6 +37,23 @@ function Dataset(df::DataFrame, users::Int, items::Int)
     ratings = convert(df[:rating], preference)
 
     matriz = sparse(df[:user], df[:item], ratings, users, items)
+
+    return Dataset(matriz, preference, users, items)
+end
+
+function Dataset(userprefs::Vector{UserPreference{T}}, preference::Preference, users::Int, items::Int) where T
+    userslist = Vector{Int}(undef, length(userprefs))
+    itemslist = Vector{Int}(undef, length(userprefs))
+    ratingslist = Vector{AbstractRating{T}}(undef, length(userprefs))
+
+    for i = 1:length(userprefs)
+        (u, v, r) = userprefs[i]
+        userslist[i] = u
+        itemslist[i] = v
+        ratingslist[i] = r
+    end
+
+    matriz = sparse(userslist, itemslist, ratingslist, users, items)
 
     return Dataset(matriz, preference, users, items)
 end
@@ -73,7 +92,7 @@ function Base.getindex(dataset::Dataset, user::Int, item::Int)::AbstractRating
     dataset.ratings[user, item]
 end
 
-function Base.getindex(dataset::Dataset, i::Int)::UserPreference
+function Base.getindex(dataset::Dataset{T}, i::Int)::UserPreference{T} where T
     if i > length(dataset)
         throw(ArgumentError("index must satisfy 1 <= i <= length(dataset)"))
     end
@@ -86,23 +105,23 @@ function Base.getindex(dataset::Dataset, i::Int)::UserPreference
             user = users[i]
             rating = ratings[i]
 
-            return UserPreference(user, item, rating)
+            return UserPreference{T}(user, item, rating)
         end
     end
 end
 
 function Base.getindex(dataset::Dataset, user::Int, c::Colon)
     elements = collect(dataset.ratings[user, :])
-    return [(idx, elements[idx]) for idx in findall(!isnan, elements)]
+    return [UserPreference(user, idx, elements[idx]) for idx in findall(!isnan, elements)]
 end
 
 function Base.getindex(dataset::Dataset, c::Colon, item::Int)
     elements = collect(dataset.ratings[:, item])
-    return [(idx, elements[idx]) for idx in findall(!isnan, elements)]
+    return [UserPreference(idx, item, elements[idx]) for idx in findall(!isnan, elements)]
 end
 
-function Base.getindex(dataset::Dataset, index::Vector{Int})
-    elements = Vector{UserPreference}(undef, length(index))
+function Base.getindex(dataset::Dataset{T}, index::Vector{Int}) where T
+    elements = Vector{UserPreference{T}}(undef, length(index))
 
     for i = 1:length(index)
         elements[i] = dataset[index[i]]
@@ -111,8 +130,8 @@ function Base.getindex(dataset::Dataset, index::Vector{Int})
     return elements
 end
 
-function Base.getindex(dataset::Dataset, index::UnitRange{Int})
-    elements = Vector{UserPreference}(undef, length(index))
+function Base.getindex(dataset::Dataset{T}, index::UnitRange{Int}) where T
+    elements = Vector{UserPreference{T}}(undef, length(index))
     j = 1
 
     for i in index
