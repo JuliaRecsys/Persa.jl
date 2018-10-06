@@ -89,6 +89,16 @@ function Base.getindex(dataset::Dataset, c::Colon, item::Int)
     return [(idx, elements[idx]) for idx in findall(!isnan, elements)]
 end
 
+function Base.getindex(dataset::Dataset, index::Vector{Int})
+    elements = Vector{Tuple{Int, Int, AbstractRating}}(undef, length(index))
+
+    for i = 1:length(index)
+        elements[i] = dataset[index[i]]
+    end
+
+    return elements
+end
+
 Base.iterate(dataset::Dataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
 
 function Statistics.mean(dataset::Dataset)
