@@ -111,6 +111,20 @@ function Base.getindex(dataset::Dataset, index::Vector{Int})
     return elements
 end
 
+function Base.getindex(dataset::Dataset, index::UnitRange{Int})
+    elements = Vector{UserPreference}(undef, length(index))
+    j = 1
+
+    for i in index
+        elements[j] = dataset[i]
+        j += 1
+    end
+
+    return elements
+end
+
+Base.getindex(dataset::Dataset, c::Colon) = dataset[1:length(dataset)]
+
 Base.iterate(dataset::Dataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
 
 function Statistics.mean(dataset::Dataset)
