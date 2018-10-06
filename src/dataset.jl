@@ -41,7 +41,7 @@ function Dataset(df::DataFrame, users::Int, items::Int)
     return Dataset(matriz, preference, users, items)
 end
 
-function Dataset(userprefs::Vector{UserPreference{T}}, preference::Preference, users::Int, items::Int) where T
+function Dataset(userprefs::Vector{UserPreference{T}}, users::Int, items::Int, preference::Preference) where T
     userslist = Vector{Int}(undef, length(userprefs))
     itemslist = Vector{Int}(undef, length(userprefs))
     ratingslist = Vector{AbstractRating{T}}(undef, length(userprefs))
