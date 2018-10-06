@@ -61,7 +61,7 @@ function Base.getindex(dataset::Dataset, user::Int, item::Int)::AbstractRating
     dataset.ratings[user, item]
 end
 
-function Base.getindex(dataset::Dataset, i::Int)::Tuple{Int, Int, Rating}
+function Base.getindex(dataset::Dataset, i::Int)::Tuple{Int, Int, AbstractRating}
     if i > length(dataset)
         throw(ArgumentError("index must satisfy 1 <= i <= length(dataset)"))
     end
