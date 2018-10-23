@@ -2,7 +2,10 @@ using DataFrames
 using SparseArrays
 using Statistics
 
-struct Dataset{T <: Number}
+abstract type AbstractDataset{T <: Number}
+end
+
+struct Dataset{T <: Number} <: AbstractDataset{T}
     ratings::SparseMatrixCSC{AbstractRating{T}, Int}
     preference::Preference{T}
     users::Int
@@ -60,11 +63,11 @@ end
 
 Dataset(df::DataFrame) = Dataset(df, maximum(df[:user]), maximum(df[:item]))
 
-users(dataset::Dataset) = dataset.users
-items(dataset::Dataset) = dataset.items
+users(dataset::AbstractDataset) = dataset.users
+items(dataset::AbstractDataset) = dataset.items
 
-Base.size(dataset::Dataset) = (users(dataset), items(dataset))
-Base.length(dataset::Dataset) = length(nonzeros(dataset.ratings))
+Base.size(dataset::AbstractDataset) = (users(dataset), items(dataset))
+Base.length(dataset::AbstractDataset) = length(nonzeros(dataset.ratings))
 
 function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing, T}} where T <: Number
     matrix = Array{Union{Missing, T}}(missing, Persa.users(dataset), Persa.items(dataset))
@@ -82,17 +85,17 @@ function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing, T}} where T <: N
     return matrix
 end
 
-checkuser(dataset::Dataset, user::Int) = (user >= 0 && user <= users(dataset)) ? user : error("invalid user id ($user)")
-checkitem(dataset::Dataset, item::Int) = (item >= 0 && item <= items(dataset)) ? item : error("invalid item id ($item)")
+checkuser(dataset::AbstractDataset, user::Int) = (user >= 0 && user <= users(dataset)) ? user : error("invalid user id ($user)")
+checkitem(dataset::AbstractDataset, item::Int) = (item >= 0 && item <= items(dataset)) ? item : error("invalid item id ($item)")
 
-function Base.getindex(dataset::Dataset, user::Int, item::Int)::AbstractRating
+function Base.getindex(dataset::AbstractDataset, user::Int, item::Int)::AbstractRating
     checkuser(dataset, user)
     checkitem(dataset, item)
 
     dataset.ratings[user, item]
 end
 
-function Base.getindex(dataset::Dataset{T}, i::Int)::UserPreference{T} where T
+function Base.getindex(dataset::AbstractDataset{T}, i::Int)::UserPreference{T} where T
     if i > length(dataset)
         throw(ArgumentError("index must satisfy 1 <= i <= length(dataset)"))
     end
