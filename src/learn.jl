@@ -14,7 +14,7 @@ function Base.getindex(model::Model, user::Int, item::Int)
     checkuser(model, user)
     checkitem(model, item)
 
-    correct(predict(model, user, item), model.preference)
+    PredictRating(correct(predict(model, user, item), model.preference), model.preference)
 end
 
 Base.getindex(model::Model, user::Int, c::Colon) = [model[user, item] for item = 1:items(model)]
