@@ -55,3 +55,6 @@ Base.:*(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) * x
 
 Base.:/(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) / x
 Base.:/(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) / x
+
+Base.isequal(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) == x
+Base.:!=(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) == x
