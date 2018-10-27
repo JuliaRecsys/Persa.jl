@@ -12,11 +12,24 @@ struct Dataset{T <: Number} <: AbstractDataset{T}
     items::Int
 end
 
+Base.string(x::Dataset) = string("""Collaborative Filtering Dataset
+                                    - # users: $(users(x))
+                                    - # items: $(items(x))
+                                    - # ratings: $(length(x))
+                                    - Ratings Preference: $(x.preference)
+                                    """)
+Base.print(io::IO, x::Dataset) = print(io, string(x))
+Base.show(io::IO, x::Dataset) = print(io, x)
+
 struct UserPreference{T}
     user::Int
     item::Int
     rating::AbstractRating{T}
 end
+
+Base.string(x::UserPreference) = string("(user: ", user(x), ", item: ", item(x), ", rating: ", x.rating, ")")
+Base.print(io::IO, x::UserPreference) = print(io, string(x))
+Base.show(io::IO, x::UserPreference) = print(io, x)
 
 user(x::UserPreference) = x.user
 item(x::UserPreference) = x.item
