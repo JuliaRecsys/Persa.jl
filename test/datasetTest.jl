@@ -52,25 +52,25 @@
 
         @testset "Colun Index Tests" begin
             for user in 1:Persa.users(dataset1)
-                for (item, rating) in dataset1[user, :]
+                for (_, item, rating) in dataset1[user, :]
                     @test dataset1[user, item] == rating
                 end
             end
 
             for item in 1:Persa.items(dataset1)
-                for (user, rating) in dataset1[:, item]
+                for (user, _, rating) in dataset1[:, item]
                     @test dataset1[user, item] == rating
                 end
             end
 
             for user in 1:Persa.users(dataset2)
-                for (item, rating) in dataset2[user, :]
+                for (_, item, rating) in dataset2[user, :]
                     @test dataset2[user, item] == rating
                 end
             end
 
             for item in 1:Persa.items(dataset2)
-                for (user, rating) in dataset2[:, item]
+                for (user, _, rating) in dataset2[:, item]
                     @test dataset2[user, item] == rating
                 end
             end
@@ -97,7 +97,7 @@
 
     @testset "Interator Tests" begin
         for (user, item, rating) in dataset1
-            @test dataset1[user, item] == rating
+            @test rating == dataset1[user, item]
         end
 
         for (user, item, rating) in dataset2
