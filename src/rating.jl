@@ -21,6 +21,18 @@ value(rating::Rating) = rating.value
 value(rating::PredictRating) = rating.value
 value(rating::MissingRating) = missing
 
+Base.string(x::Rating) = string(value(x))
+Base.print(io::IO, x::Rating) = print(io, string(x))
+Base.show(io::IO, x::Rating) = print(io, "Rating: ", x)
+
+Base.string(x::PredictRating) = string(value(x), "(", x.target ,")")
+Base.print(io::IO, x::PredictRating) = print(io, string(x))
+Base.show(io::IO, x::PredictRating) = print(io, "Rating: ", x, " (", T , ")")
+
+Base.string(x::MissingRating) = string(value(x))
+Base.print(io::IO, x::MissingRating) = print(io, string(x))
+Base.show(io::IO, x::MissingRating) = print(io, "Rating: ", x)
+
 Base.isnan(rating::AbstractRating{T}) where T <: Number = false
 Base.isnan(rating::MissingRating{T}) where T <: Number = true
 
@@ -55,3 +67,6 @@ Base.:*(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) * x
 
 Base.:/(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) / x
 Base.:/(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) / x
+
+Base.isequal(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) == x
+Base.:!=(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) == x

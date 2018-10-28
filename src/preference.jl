@@ -6,6 +6,10 @@ end
 
 Preference(possibles::Array{T, 1}) where T <: Real = Preference(sort(unique(possibles)), minimum(possibles), maximum(possibles))
 
+Base.string(x::Preference) = string(sort(x.possibles))
+Base.print(io::IO, x::Preference) = print(io, string(x))
+Base.show(io::IO, x::Preference) = print(io, "Ratings Preference: ", x)
+
 """
     minimum(preference::Preference)
 Return lower value of rating preferences.
