@@ -126,12 +126,12 @@ function Base.getindex(dataset::AbstractDataset{T}, i::Int)::UserPreference{T} w
     end
 end
 
-function Base.getindex(dataset::Dataset, user::Int, c::Colon)
+function Base.getindex(dataset::AbstractDataset, user::Int, c::Colon)
     elements = collect(dataset.ratings[user, :])
     return [UserPreference(user, idx, elements[idx]) for idx in findall(!isnan, elements)]
 end
 
-function Base.getindex(dataset::Dataset, c::Colon, item::Int)
+function Base.getindex(dataset::AbstractDataset, c::Colon, item::Int)
     elements = collect(dataset.ratings[:, item])
     return [UserPreference(idx, item, elements[idx]) for idx in findall(!isnan, elements)]
 end
@@ -158,9 +158,9 @@ function Base.getindex(dataset::Dataset{T}, index::UnitRange{Int}) where T
     return elements
 end
 
-Base.getindex(dataset::Dataset, c::Colon) = dataset[1:length(dataset)]
+Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
-Base.iterate(dataset::Dataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
+Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
 
 function Statistics.mean(dataset::Dataset)
     μ = 0

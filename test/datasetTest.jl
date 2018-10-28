@@ -50,7 +50,7 @@
             end
         end
 
-        @testset "Colun Index Tests" begin
+        @testset "Column Index Tests" begin
             for user in 1:Persa.users(dataset1)
                 for (_, item, rating) in dataset1[user, :]
                     @test dataset1[user, item] == rating
@@ -95,7 +95,7 @@
         end
     end
 
-    @testset "Interator Tests" begin
+    @testset "Iterator Tests" begin
         for (user, item, rating) in dataset1
             @test rating == dataset1[user, item]
         end
