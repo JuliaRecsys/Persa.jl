@@ -15,7 +15,6 @@ end
 Base.string(x::Dataset) = string("""Collaborative Filtering Dataset
                                     - # users: $(users(x))
                                     - # items: $(items(x))
-                                    - # ratings: $(length(x))
                                     - Ratings Preference: $(x.preference)
                                     """)
 Base.print(io::IO, x::Dataset) = print(io, string(x))
@@ -136,7 +135,7 @@ function Base.getindex(dataset::AbstractDataset, c::Colon, item::Int)
     return [UserPreference(idx, item, elements[idx]) for idx in findall(!isnan, elements)]
 end
 
-function Base.getindex(dataset::Dataset{T}, index::Vector{Int}) where T
+function Base.getindex(dataset::AbstractDataset{T}, index::Vector{Int}) where T
     elements = Vector{UserPreference{T}}(undef, length(index))
 
     for i = 1:length(index)
@@ -146,7 +145,7 @@ function Base.getindex(dataset::Dataset{T}, index::Vector{Int}) where T
     return elements
 end
 
-function Base.getindex(dataset::Dataset{T}, index::UnitRange{Int}) where T
+function Base.getindex(dataset::AbstractDataset{T}, index::UnitRange{Int}) where T
     elements = Vector{UserPreference{T}}(undef, length(index))
     j = 1
 
