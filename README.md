@@ -104,4 +104,9 @@ Rating: 4
 
 ### Model
 
-## Collaborative Filtering
+## Packages
+
+Some important packages:
+- DatasetsCF
+- EvaluationCF
+- ModelBasedCF
