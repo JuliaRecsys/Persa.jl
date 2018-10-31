@@ -33,6 +33,10 @@ However, this matrix is not necessarily complete since the user din't necessaril
 |  User #3 |    3     |    4     |          |
 |  User #4 |          |    5     |    4     |
 
+Persa can be divided into large two parts: data access and predictive model
+
+### Data
+
 The ```Persa.Preference``` represents all possibilities of ratings within a system. 
 It is used to validate a rating. 
 We can define that in this system the ratings are defined as integers of [1,5]:
@@ -59,7 +63,8 @@ julia> x = Persa.UserPreference(1, 1, Persa.Rating(1, preference))
 
 In this way, we can create the above matrix.
 
-```julia> data = [Persa.UserPreference(1, 1, Persa.Rating(4, preference)), Persa.UserPreference(1, 3, Persa.Rating(2, preference)), Persa.UserPreference(2, 1, Persa.Rating(4, preference)), Persa.UserPreference(2, 2, Persa.Rating(5, preference)), Persa.UserPreference(2, 3, Persa.Rating(3, preference)), Persa.UserPreference(3, 1, Persa.Rating(3, preference)), Persa.UserPreference(3, 2, Persa.Rating(4, preference)), Persa.UserPreference(4, 2, Persa.Rating(5, preference)), Persa.UserPreference(3, 3, Persa.Rating(4, preference))]
+```
+julia> data
 9-element Array{Persa.UserPreference{Int64},1}:
  (user: 1, item: 1, rating: 4)
  (user: 1, item: 3, rating: 2)
@@ -83,3 +88,20 @@ Collaborative Filtering Dataset
 - Ratings Preference: [1, 2, 3, 4, 5]
 ```
 
+It is possible to access the data through linear indexing or by the user and item indices.
+
+In the case of linear the related ```Persa.UserPreference``` will be returned.
+```
+julia> dataset[1]
+(user: 1, item: 1, rating: 4)
+```
+
+Already using the indíces through the user and item will be returning the rating.
+```
+julia> dataset[1,1]
+Rating: 4
+```
+
+### Model
+
+## Collaborative Filtering
