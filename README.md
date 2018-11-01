@@ -107,6 +107,6 @@ Rating: 4
 ## Packages
 
 Some important packages:
-- DatasetsCF
-- EvaluationCF
-- ModelBasedCF
+- **[DatasetsCF](https://github.com/JuliaRecsys/DatasetsCF.jl)**: Package with collaborative filtering datasets.
+- **[EvaluationCF](https://github.com/JuliaRecsys/EvaluationCF.jl)**: Packages for evaluation of predictive algorithms. It contains metrics, data partitioning and more. (under construction)
+- **[ModelBasedCF](https://github.com/JuliaRecsys/ModelBasedCF.jl)**: Model based algorithghs. (under construction)
