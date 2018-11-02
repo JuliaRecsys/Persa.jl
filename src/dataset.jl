@@ -136,7 +136,7 @@ function Base.getindex(dataset::AbstractDataset, c::Colon, item::Int)
     return [UserPreference(idx, item, elements[idx]) for idx in findall(!isnan, elements)]
 end
 
-function Base.getindex(dataset::Dataset{T}, index::Vector{Int}) where T
+function Base.getindex(dataset::AbstractDataset{T}, index::Vector{Int}) where T
     elements = Vector{UserPreference{T}}(undef, length(index))
 
     for i = 1:length(index)
@@ -146,7 +146,7 @@ function Base.getindex(dataset::Dataset{T}, index::Vector{Int}) where T
     return elements
 end
 
-function Base.getindex(dataset::Dataset{T}, index::UnitRange{Int}) where T
+function Base.getindex(dataset::AbstractDataset{T}, index::UnitRange{Int}) where T
     elements = Vector{UserPreference{T}}(undef, length(index))
     j = 1
 
@@ -162,7 +162,7 @@ Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
 Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
 
-function Statistics.mean(dataset::Dataset)
+function Statistics.mean(dataset::AbstractDataset)
     μ = 0
     total = 0
     for (u, v, r) in dataset
