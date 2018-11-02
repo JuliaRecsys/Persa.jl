@@ -25,9 +25,9 @@ Base.string(x::Rating) = string(value(x))
 Base.print(io::IO, x::Rating) = print(io, string(x))
 Base.show(io::IO, x::Rating) = print(io, "Rating: ", x)
 
-Base.string(x::PredictRating) = string(value(x), "(", x.target ,")")
+Base.string(x::PredictRating) = string(value(x), " (", x.target ,")")
 Base.print(io::IO, x::PredictRating) = print(io, string(x))
-Base.show(io::IO, x::PredictRating) = print(io, "Rating: ", x, " (", T , ")")
+Base.show(io::IO, x::PredictRating) = print(io, "Rating: ", x)
 
 Base.string(x::MissingRating) = string(value(x))
 Base.print(io::IO, x::MissingRating) = print(io, string(x))
