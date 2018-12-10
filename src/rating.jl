@@ -9,13 +9,29 @@ end
 
 struct Rating{T <: Number} <: AbstractRating{T}
     value::T
-    Rating(x::T, preference::Preference{T}) where T <: Number = new{T}(correct(x, preference))
+    history::Vector{Persa.Rating{T}}
+    Rating(x::T, preference::Preference{T}) where T <: Number = new{T}(correct(x, preference), Vector{Persa.Rating{T}}())
 end
 
 struct MissingRating{T <: Number} <: AbstractRating{T}
 end
 
+function Base.getindex(rating::Persa.Rating, i::Int)
+    if i < 1 || (i - 1) > length(rating.history)
+        throw(BoundsError(rating, i))
+    elseif i == 1
+        return rating
+    end
+
+    return rating.history[i-1]
+end
+
 MissingRating() = MissingRating{Number}()
+
+function rerating(r1::Persa.Rating{T}, r2::Persa.Rating{T}) where T
+    push!(r1.history, r2)
+    return r1
+end
 
 value(rating::Rating) = rating.value
 value(rating::PredictRating) = rating.value

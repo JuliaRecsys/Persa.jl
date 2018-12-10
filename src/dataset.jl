@@ -52,7 +52,7 @@ function Dataset(df::DataFrame, users::Int, items::Int)
 
     ratings = convert(df[:rating], preference)
 
-    matriz = sparse(df[:user], df[:item], ratings, users, items)
+    matriz = sparse(df[:user], df[:item], ratings, users, items, rerating)
 
     return Dataset(matriz, preference, users, items)
 end
