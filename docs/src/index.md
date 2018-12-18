@@ -24,12 +24,12 @@ The purpose of this approach is to use user ratings to suggest some item that th
 This approach can be represented by a matrix where the content of it is the evaluation performed by the user on an item.
 However, this matrix is not necessarily complete since the user didn't necessarily consume all items.
 
-|          |  Item #1 |  Item #2 |  Item #3 |
+|          |  Item  1 |  Item  2 |  Item  3 |
 |:---------|:--------:|:--------:|:--------:|
-|  User #1 |    4     |          |    2     |
-|  User #2 |    4     |    5     |    3     |
-|  User #3 |    3     |    4     |          |
-|  User #4 |          |    5     |    4     |
+|  User  1 |    4     |          |    2     |
+|  User  2 |    4     |    5     |    3     |
+|  User  3 |    3     |    4     |          |
+|  User  4 |          |    5     |    4     |
 
 Persa can be divided into large two parts: data access and predictive model
 
