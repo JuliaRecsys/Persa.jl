@@ -11,7 +11,6 @@ function myDeps()
     if get(ENV, "TRAVIS", "") != ""
         println("Installing deploy dependencies")
         run(`pip install --user pygments mkdocs`)
-        makePlots()
     end
 end
 
