@@ -1,20 +1,32 @@
-using Base: depwarn
-
-abstract type CFModel
-
+abstract type Model
 end
 
-function predict{T <: CFModel}(model::T, data::Array)
-  [ canpredict(model, data[i,1], data[i,2]) ? predict(model, data[i,1], data[i,2]): NaN for i=1:size(data)[1]]
+users(model::Model) = model.users
+items(model::Model) = model.items
+
+checkuser(model::Model, user::Int) = (user >= 0 && user <= users(model)) ? user : error("invalid user id ($user)")
+checkitem(model::Model, item::Int) = (item >= 0 && item <= items(model)) ? item : error("invalid item id ($item)")
+
+predict(model::Model, user::Int, item::Int) = 0
+train!(model::Model, dataset::Dataset) = nothing
+
+function Base.getindex(model::Model, user::Int, item::Int)
+    checkuser(model, user)
+    checkitem(model, item)
+
+    PredictRating(correct(predict(model, user, item), model.preference), model.preference)
 end
 
-predict{T <: CFModel}(model::T, dataset::CFDatasetAbstract) = predict(model, dataset.file)
+Base.getindex(model::Model, user::Int, c::Colon) = [model[user, item] for item = 1:items(model)]
+Base.getindex(model::Model, c::Colon, item::Int) = [model[user, item] for user = 1:users(model)]
 
-predict{T <: CFModel}(model::T, data::DataFrame) = predict(model, Array(data))
+function Base.getindex(model::Model, dataset::Dataset)
+    predicts = Vector{Float64}(undef, length(dataset))
 
-function canpredict(model::CFModel, user::Int, item::Int)
-    depwarn("canPredict is deprecated, use canPredict instead.", :canPredict)
-    canPredict(model, user, item)
+    for i = 1:length(dataset)
+        (u, v, r) = dataset[i]
+        predicts[i] = model[u, v]
+    end
+
+    return predicts
 end
-
-@deprecate canPredict(model::CFModel, user::Int, item::Int) canpredict(model, user, item)

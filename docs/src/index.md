@@ -1,3 +1,3 @@
-# Persa Documentation Outline
+# Persa.jl
 
-## Package Manual
+[Persa](https://github.com/JuliaRecsys/Persa.jl) is a package ...

@@ -3,7 +3,8 @@ language: julia
 os:
   - linux
 julia:
-  - release
+  - 1.0
+  - nightly
 notifications:
   email: false
 # uncomment the following lines to override the default test script
@@ -11,9 +12,7 @@ notifications:
 #  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("Persa"); Pkg.test("Persa"; coverage=true)'
 after_success:
-  - julia -e 'Pkg.add("Documenter")'
-  - julia -e 'cd(Pkg.dir("Persa")); include(joinpath("docs", "make.jl"))'
+  - julia -e 'import Pkg; ps=Pkg.PackageSpec(name="Documenter", version="0.19"); Pkg.add(ps); Pkg.pin(ps)'
+  - julia -e 'import Pkg; cd(Pkg.dir("Persa")); include(joinpath("docs", "make.jl"))'
   # push coverage results to Coveralls
-  - julia -e 'cd(Pkg.dir("Persa")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
-  # push coverage results to Codecov
-  - julia -e 'cd(Pkg.dir("Persa")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+  - julia -e 'import Pkg; cd(Pkg.dir("Persa")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder()); Codecov.submit(process_folder())'

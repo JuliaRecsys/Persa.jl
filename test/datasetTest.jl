@@ -1,87 +1,107 @@
-
 @testset "Datasets Kernel Tests" begin
+    df1 = createdummydatasetone()
+    dataset1 = Persa.Dataset(df1)
 
-    ds = Persa.createdummydataset()
+    df2 = createdummydatasettwo()
+    dataset2 = Persa.Dataset(df2, 10, 10)
 
-    @testset "Dummy Dataset" begin
-        @test ds.users == 7
-        @test ds.items == 6
-        @test length(ds.preferences.possibles) == 9
-        @test ds.preferences.min == 1
-        @test ds.preferences.max == 5
+    @testset "Dummy Tests" begin
+        @test dataset1.users == 7
+        @test dataset1.items == 6
+        @test Persa.users(dataset1) == 7
+        @test Persa.items(dataset1) == 6
+
+        @test dataset2.users == 10
+        @test dataset2.items == 10
+        @test Persa.users(dataset2) == 10
+        @test Persa.items(dataset2) == 10
+
+        @test Persa.size(dataset1) == (7, 6)
+        @test Persa.size(dataset2) == (10, 10)
+
+        @test Persa.length(dataset1) == 35
+        @test Persa.length(dataset2) == 35
     end
 
-    @testset "Holdout" begin
-        holdout = Persa.HoldOut(ds, 0.9)
+    @testset "Index Tests" begin
+        @testset "Cartesian Index Tests" begin
+            for i = 1:size(df1)[1]
+                user = df1[:user][i]
+                item = df1[:item][i]
+                rating = df1[:rating][i]
+                @test Persa.value(dataset1[user, item]) == rating
+            end
 
-        (ds_train, ds_test) = Persa.get(holdout)
-        @test ds_train.users == 7
-        @test ds_train.items == 6
-        @test length(ds_train) != length(ds)
-        @test length(ds_train) != size(ds_test)[1]
-        @test length(ds) != size(ds_test)[1]
-        @test Persa.sparsity(ds) >= 0
-    end
+            for i = 1:size(df2)[1]
+                user = df2[:user][i]
+                item = df2[:item][i]
+                rating = df2[:rating][i]
+                @test Persa.value(dataset2[user, item]) == rating
+            end
 
-    @testset "KFold" begin
-        for (ds_train, ds_test) in Persa.KFolds(ds, 10)
-          @test ds_train.users == 7
-          @test ds_train.items == 6
-          @test length(ds_train.preferences.possibles) == 9
-          @test ds_train.preferences.min == 1
-          @test ds_train.preferences.max == 5
-          @test length(ds_train) != length(ds)
-          @test length(ds_train) != size(ds_test)[1]
-          @test length(ds) != size(ds_test)[1]
+            for i = 1:length(dataset1)
+                (user, item, rating) = dataset1[i]
+                @test dataset1[user, item] == rating
+            end
+
+            for i = 1:length(dataset2)
+                (user, item, rating) = dataset2[i]
+                @test dataset2[user, item] == rating
+            end
         end
 
-        kfold = Persa.KFolds(ds, 10)
-        @test length(kfold) == 10
+        @testset "Column Index Tests" begin
+            for user in 1:Persa.users(dataset1)
+                for (_, item, rating) in dataset1[user, :]
+                    @test dataset1[user, item] == rating
+                end
+            end
+
+            for item in 1:Persa.items(dataset1)
+                for (user, _, rating) in dataset1[:, item]
+                    @test dataset1[user, item] == rating
+                end
+            end
+
+            for user in 1:Persa.users(dataset2)
+                for (_, item, rating) in dataset2[user, :]
+                    @test dataset2[user, item] == rating
+                end
+            end
+
+            for item in 1:Persa.items(dataset2)
+                for (user, _, rating) in dataset2[:, item]
+                    @test dataset2[user, item] == rating
+                end
+            end
+        end
     end
 
-    @testset "Rating Preferences" begin
-        holdout = Persa.HoldOut(ds, 0.9)
+    @testset "Matrix Conversion Tests" begin
+        matrix = Array(dataset1)
 
-        (ds_train, ds_test) = Persa.get(holdout)
+        for user in 1:Persa.users(dataset1)
+            for item in 1:Persa.items(dataset1)
+                @test Persa.value(dataset1[user, item]) === matrix[user, item]
+            end
+        end
 
-        @test length(ds_train.preferences.possibles) == 9
-        @test ds_train.preferences.min == Base.minimum(ds_train.preferences)
-        @test ds_train.preferences.max == Base.maximum(ds_train.preferences)
-        @test eltype(ds_train.preferences) == Float64
-        @test size(ds_train.preferences) == 9
-        @test round(1.1, ds_train.preferences) == 1.0
-        @test round(1, ds_train.preferences) == 1.0
-        @test Persa.recommendation(ds_train) == 4.0
-        @test Persa.recommendation(ds_train.preferences) == 4.0
-        @test Persa.recommendation(ds_train.preferences) == Persa.recommendation(ds_train)
+        matrix = Array(dataset2)
 
-        @test Persa.correct(Inf, ds_train.preferences) == ds.preferences.max
-        @test Persa.correct(-Inf, ds_train.preferences) == ds.preferences.min
+        for user in 1:Persa.users(dataset2)
+            for item in 1:Persa.items(dataset2)
+                @test Persa.value(dataset2[user, item]) === matrix[user, item]
+            end
+        end
     end
 
-    @testset "Interfaces" begin
-        (ds_train, ds_test) = Persa.get(Persa.HoldOut(ds, 0.9))
-        (u, v, r) = ds_train[1]
+    @testset "Iterator Tests" begin
+        for (user, item, rating) in dataset1
+            @test rating == dataset1[user, item]
+        end
 
-        @test typeof(u) == Int
-        @test typeof(v) == Int
-        @test typeof(r) == Float64
-
-        matrix = Persa.getmatrix(ds)
-
-        @test matrix[1, 1] == 2.5
-        (m, n) = size(matrix)
-        @test m == ds_train.users
-        @test n == ds_train.items
-    end
-
-    @testset "Others" begin
-        ds_copy = copy(ds)
-        @test ds_copy !== copy
-        @test ds_copy.preferences === ds.preferences
-        @test ds.file !== ds_copy.file
-        @test ds.users == ds_copy.users
-        @test ds.items == ds_copy.items
-        @test length(ds.file) == length(ds_copy.file)
+        for (user, item, rating) in dataset2
+            @test dataset2[user, item] == rating
+        end
     end
 end

@@ -1,15 +1,20 @@
 using Documenter, Persa
 
 makedocs(
-    # options
     modules = [Persa],
-    doctest = false,
-    clean   = false
+    format = :html,
+    sitename = "Persa.jl",
+    authors = "Filipe Braida and contributors.",
+    analytics = "UA-128580038-1",
+    pages    = Any[
+        "Introduction"   => "index.md"
+    ]
 )
 
 deploydocs(
-    deps   = Deps.pip("pygments", "mkdocs", "mkdocs-material", "python-markdown-math"),
-    repo = "github.com/filipebraida/Persa.jl.git",
-    julia = "0.6",
-    osname = "linux"
+    repo = "github.com/JuliaRecsys/Persa.jl.git",
+    target = "build",
+    deps = nothing,
+    make = nothing,
+    julia  = "1.0",
 )
