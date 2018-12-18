@@ -1,6 +1,6 @@
 site_name:        Persa.jl
 repo_url:         https://github.com/JuliaRecsys/Persa.jl
-site_description: site_description:Recommender System framework for Julia.
+site_description: Recommender System framework for Julia.
 site_author:      JuliaRecsys
 
 theme: readthedocs

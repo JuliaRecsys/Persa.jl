@@ -27,7 +27,7 @@ julia> import Pkg; Pkg.add("Persa")
 Some important packages:
 - **[DatasetsCF](https://github.com/JuliaRecsys/DatasetsCF.jl)**: Package with collaborative filtering datasets.
 - **[EvaluationCF](https://github.com/JuliaRecsys/EvaluationCF.jl)**: Packages for evaluation of predictive algorithms. It contains metrics, data partitioning and more. (under construction)
-- **[ModelBasedCF](https://github.com/JuliaRecsys/ModelBasedCF.jl)**: Model based algorithghs. (under construction)
+- **[ModelBasedCF](https://github.com/JuliaRecsys/ModelBasedCF.jl)**: Model based algorithms. (under construction)
 
 [contrib-url]: https://juliadocs.github.io/Documenter.jl/latest/man/contributing/
 
