@@ -25,7 +25,7 @@ This approach can be represented by a matrix where the content of it is the eval
 However, this matrix is not necessarily complete since the user didn't necessarily consume all items.
 
 |          |  Item #1 |  Item #2 |  Item #3 |
-|:--------:|:--------:|:--------:|:--------:|
+|:---------|:--------:|:--------:|:--------:|
 |  User #1 |    4     |          |    2     |
 |  User #2 |    4     |    5     |    3     |
 |  User #3 |    3     |    4     |          |
