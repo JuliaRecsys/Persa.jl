@@ -2,7 +2,8 @@ using Documenter, Persa
 
 makedocs(
     modules = [Persa],
-    analytics = "UA-128580038-1"
+    analytics = "UA-128580038-1",
+    sitename = "Persa.jl"
 )
 
 # Only build plots in travis if we are deploying
