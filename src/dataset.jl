@@ -1,4 +1,4 @@
-using DataFrames
+import DataFrames.DataFrames
 using SparseArrays
 using Statistics
 
@@ -39,20 +39,20 @@ Base.iterate(p::UserPreference, state=1) = length(fieldnames(typeof(p))) < state
 
 Base.getindex(p::UserPreference{T}, i::Int) where T = length(fieldnames(typeof(p))) < i ? nothing : getfield(p, i)
 
-function Dataset(df::DataFrame, users::Int, items::Int)
+function Dataset(df::DataFrames.DataFrame, users::Int, items::Int)
     @assert in(:user, names(df))
     @assert in(:item, names(df))
     @assert in(:rating, names(df))
 
-    if users < maximum(df[:user]) || items < maximum(df[:item])
-        throw(ArgumentError("users or items must satisfy maximum[df[:k]] >= k"))
+    if users < maximum(df[!, :user]) || items < maximum(df[!, :item])
+        throw(ArgumentError("users or items must satisfy maximum[df[!, :k]] >= k"))
     end
 
-    preference = Preference(df[:rating])
+    preference = Preference(df[!, :rating])
 
-    ratings = convert(df[:rating], preference)
+    ratings = convert(df[!, :rating], preference)
 
-    matriz = sparse(df[:user], df[:item], ratings, users, items, rerating)
+    matriz = sparse(df[!, :user], df[!, :item], ratings, users, items, rerating)
 
     return Dataset(matriz, preference, users, items)
 end
@@ -74,7 +74,7 @@ function Dataset(userprefs::Vector{UserPreference{T}}, users::Int, items::Int, p
     return Dataset(matriz, preference, users, items)
 end
 
-Dataset(df::DataFrame) = Dataset(df, maximum(df[:user]), maximum(df[:item]))
+Dataset(df::DataFrames.DataFrame) = Dataset(df, maximum(df[!, :user]), maximum(df[!, :item]))
 
 users(dataset::AbstractDataset) = dataset.users
 items(dataset::AbstractDataset) = dataset.items
