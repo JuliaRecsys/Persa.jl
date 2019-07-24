@@ -26,16 +26,16 @@
     @testset "Index Tests" begin
         @testset "Cartesian Index Tests" begin
             for i = 1:size(df1)[1]
-                user = df1[:user][i]
-                item = df1[:item][i]
-                rating = df1[:rating][i]
+                user = df1[!, :user][i]
+                item = df1[!, :item][i]
+                rating = df1[!, :rating][i]
                 @test Persa.value(dataset1[user, item]) == rating
             end
 
             for i = 1:size(df2)[1]
-                user = df2[:user][i]
-                item = df2[:item][i]
-                rating = df2[:rating][i]
+                user = df2[!, :user][i]
+                item = df2[!, :item][i]
+                rating = df2[!, :rating][i]
                 @test Persa.value(dataset2[user, item]) == rating
             end
 
