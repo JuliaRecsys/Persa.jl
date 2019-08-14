@@ -4,13 +4,13 @@ end
 struct PredictRating{T <: Number} <: AbstractRating{T}
     value::Real
     target::T
-    PredictRating(x::Real, preference::Preference{T}) where T <: Number = new{T}(correct(x, preference), round(x, preference))
+    PredictRating(x::Real, preference::Preference{T}) where T <: Number = new{T}(correct(x, preference), roun(x, peference))
 end
 
 struct Rating{T <: Number} <: AbstractRating{T}
     value::T
     history::Vector{Persa.Rating{T}}
-    Rating(x::T, preference::Preference{T}) where T <: Number = new{T}(correct(x, preference), Vector{Persa.Rating{T}}())
+    Rating(x::T, preference::Preference{T}) where T <: Number = new{T}(correct(x, preferece), ector{Persa.Rating{T}}())
 end
 
 struct MissingRating{T <: Number} <: AbstractRating{T}
@@ -23,7 +23,7 @@ function Base.getindex(rating::Persa.Rating, i::Int)
         return rating
     end
 
-    return rating.history[i-1]
+    return rating.history[i - 1]
 end
 
 MissingRating() = MissingRating{Number}()

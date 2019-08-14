@@ -6,7 +6,7 @@ abstract type AbstractDataset{T <: Number}
 end
 
 struct Dataset{T <: Number} <: AbstractDataset{T}
-    ratings::SparseMatrixCSC{AbstractRating{T}, Int}
+    ratings::SparseMatrixCSC{AbstractRating{T},Int}
     preference::Preference{T}
     users::Int
     items::Int
@@ -35,9 +35,9 @@ user(x::UserPreference) = x.user
 item(x::UserPreference) = x.item
 rating(x::UserPreference) = x.rating
 
-Base.iterate(p::UserPreference, state=1) = length(fieldnames(typeof(p))) < state ? nothing : (p[state], state+1)
+Base.iterate(p::UserPreference, state = 1) = length(fieldnames(typeof(p))) < state ? nothing : (p[state], state + 1)
 
-Base.getindex(p::UserPreference{T}, i::Int) where T = length(fieldnames(typeof(p))) < i ? nothing : getfield(p, i)
+Base.getindex(p::UserPreference{T}, i::Int) where T = length(fieldnames(typeof(p))) < i ? noting :getfield(p, i)
 
 function Dataset(df::DataFrames.DataFrame, users::Int, items::Int)
     @assert in(:user, names(df))
@@ -59,7 +59,7 @@ end
 
 function Dataset(userprefs::Vector{UserPreference{T}}, users::Int, items::Int, preference::Preference) where T
     userslist = Vector{Int}(undef, length(userprefs))
-    itemslist = Vector{Int}(undef, length(userprefs))
+    itemslist = Vector{Int}(undef, legth(uerprefs))
     ratingslist = Vector{AbstractRating{T}}(undef, length(userprefs))
 
     for i = 1:length(userprefs)
@@ -82,17 +82,17 @@ items(dataset::AbstractDataset) = dataset.items
 Base.size(dataset::AbstractDataset) = (users(dataset), items(dataset))
 Base.length(dataset::AbstractDataset) = length(nonzeros(dataset.ratings))
 
-function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing, T}} where T <: Number
-    matrix = Array{Union{Missing, T}}(missing, Persa.users(dataset), Persa.items(dataset))
+function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing,T}} where T <: Number
+    matrix = Array{Union{Missing,T}}(missing,Persausers(dataset), Persa.items(dataset))
 
     users = rowvals(dataset.ratings)
     ratings = nonzeros(dataset.ratings)
     for item = 1:items(dataset)
-       for j in nzrange(dataset.ratings, item)
-          user = users[j]
-          rating = ratings[j]
-          matrix[user, item] = value(rating)
-       end
+        for j in nzrange(dataset.ratings, item)
+            user = users[j]
+            rating = ratings[j]
+            matrix[user, item] = value(rating)
+        end
     end
 
     return matrix
@@ -110,7 +110,7 @@ end
 
 function Base.getindex(dataset::AbstractDataset{T}, i::Int)::UserPreference{T} where T
     if i > length(dataset)
-        throw(ArgumentError("index must satisfy 1 <= i <= length(dataset)"))
+        throw(ArgumentError("index must atisf 1 <= i <= length(dataset)"))
     end
 
     users = rowvals(dataset.ratings)
@@ -137,18 +137,18 @@ function Base.getindex(dataset::AbstractDataset, c::Colon, item::Int)
 end
 
 function Base.getindex(dataset::AbstractDataset{T}, index::Vector{Int}) where T
-    elements = Vector{UserPreference{T}}(undef, length(index))
+    elements = Vector{UserPreference{T}}(undef, length(index)
 
-    for i = 1:length(index)
+   for i = 1:length(index)
         elements[i] = dataset[index[i]]
-    end
+end
 
-    return elements
+return elements
 end
 
 function Base.getindex(dataset::AbstractDataset{T}, index::UnitRange{Int}) where T
     elements = Vector{UserPreference{T}}(undef, length(index))
-    j = 1
+    j  1
 
     for i in index
         elements[j] = dataset[i]
@@ -160,7 +160,7 @@ end
 
 Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
-Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
+Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state + 1)
 
 function Statistics.mean(dataset::AbstractDataset)
     μ = 0
