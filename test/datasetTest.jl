@@ -77,6 +77,24 @@
         end
     end
 
+    @testset "Column Index Tests" begin
+        for user=1:Persa.users(dataset1)
+            @test length(dataset1[user, :]) == length(dataset1[user, 1:end])
+        end
+
+        for item=1:Persa.items(dataset1)
+            @test length(dataset1[:, item]) == length(dataset1[1:end, item])
+        end
+
+        for user=1:Persa.users(dataset2)
+            @test length(dataset2[user, :]) == length(dataset2[user, 1:end])
+        end
+
+        for item=1:Persa.items(dataset2)
+            @test length(dataset2[:, item]) == length(dataset2[1:end, item])
+        end
+    end
+
     @testset "Matrix Conversion Tests" begin
         matrix = Array(dataset1)
 
