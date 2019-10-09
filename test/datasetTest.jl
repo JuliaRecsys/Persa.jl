@@ -133,6 +133,9 @@
                 @test element[2] >= start && element[2] <= last
             end
         end
+
+        @test length(dataset1[1:end, 1:end]) == length(dataset1)
+        @test length(dataset2[1:end, 1:end]) == length(dataset2)
     end
 
     @testset "Matrix Conversion Tests" begin
