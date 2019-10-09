@@ -200,6 +200,19 @@ function Base.getindex(dataset::AbstractDataset{T}, index::UnitRange{Int}) where
     return elements
 end
 
+function Base.getindex(dataset::AbstractDataset{T}, users::UnitRange{Int}, items::UnitRange{Int}) where T
+    elements = UserPreference{T}[]
+
+    for user in users, item in items
+        value = dataset[user, item]
+        if !isnan(value)
+            push!(elements, UserPreference(user, item, value))
+        end
+    end
+
+    return elements
+end
+
 Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
 Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
