@@ -152,7 +152,7 @@ function Base.getindex(dataset::AbstractDataset{T}, user::Int, index::UnitRange{
     return elements
 end
 
-function Base.getindex(dataset::AbstractDataset{T}], c::Colon, item::Int) where T
+function Base.getindex(dataset::AbstractDataset{T}, c::Colon, item::Int) where T
     elements = Persa.UserPreference{T}[]
 
     for i=1:users(dataset)
