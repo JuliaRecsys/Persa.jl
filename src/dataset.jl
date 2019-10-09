@@ -204,6 +204,8 @@ Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
 Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
 
+Base.lastindex(dataset::AbstractDataset, d::Int) = d == 1 ? users(dataset) : items(dataset)
+
 function Statistics.mean(dataset::AbstractDataset)
     μ = 0
     total = 0
