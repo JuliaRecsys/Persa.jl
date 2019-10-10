@@ -213,6 +213,8 @@ function Base.getindex(dataset::AbstractDataset{T}, users::UnitRange{Int}, items
     return elements
 end
 
+Base.getindex(dataset::AbstractDataset, c1::Colon, c2::Colon) = dataset[1:end, 1:end]
+
 Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
 Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
