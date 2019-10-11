@@ -20,3 +20,4 @@ end
 ####
 include("ratingTest.jl")
 include("datasetTest.jl")
+include("learnTest.jl")

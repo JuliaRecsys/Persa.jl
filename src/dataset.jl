@@ -126,14 +126,56 @@ function Base.getindex(dataset::AbstractDataset{T}, i::Int)::UserPreference{T} w
     end
 end
 
-function Base.getindex(dataset::AbstractDataset, user::Int, c::Colon)
-    elements = collect(dataset.ratings[user, :])
-    return [UserPreference(user, idx, elements[idx]) for idx in findall(!isnan, elements)]
+function Base.getindex(dataset::AbstractDataset{T}, user::Int, c::Colon) where T
+    elements = Persa.UserPreference{T}[]
+
+    for i=1:items(dataset)
+        value = dataset[user, i]
+        if !isnan(value)
+            push!(elements, UserPreference(user, i, value))
+        end
+    end
+
+    return elements
 end
 
-function Base.getindex(dataset::AbstractDataset, c::Colon, item::Int)
-    elements = collect(dataset.ratings[:, item])
-    return [UserPreference(idx, item, elements[idx]) for idx in findall(!isnan, elements)]
+function Base.getindex(dataset::AbstractDataset{T}, user::Int, index::UnitRange{Int}) where T
+    elements = Persa.UserPreference{T}[]
+
+    for i=1:length(index)
+        value = dataset[user, index[i]]
+        if !isnan(value)
+            push!(elements, UserPreference(user, index[i], value))
+        end
+    end
+
+    return elements
+end
+
+function Base.getindex(dataset::AbstractDataset{T}, c::Colon, item::Int) where T
+    elements = Persa.UserPreference{T}[]
+
+    for i=1:users(dataset)
+        value = dataset[i, item]
+        if !isnan(value)
+            push!(elements, UserPreference(i, item, value))
+        end
+    end
+
+    return elements
+end
+
+function Base.getindex(dataset::AbstractDataset{T}, index::UnitRange{Int}, item::Int) where T
+    elements = Persa.UserPreference{T}[]
+
+    for i=1:length(index)
+        value = dataset[index[i], item]
+        if !isnan(value)
+            push!(elements, UserPreference(index[i], item, value))
+        end
+    end
+
+    return elements
 end
 
 function Base.getindex(dataset::AbstractDataset{T}, index::Vector{Int}) where T
@@ -158,9 +200,26 @@ function Base.getindex(dataset::AbstractDataset{T}, index::UnitRange{Int}) where
     return elements
 end
 
+function Base.getindex(dataset::AbstractDataset{T}, users::UnitRange{Int}, items::UnitRange{Int}) where T
+    elements = UserPreference{T}[]
+
+    for user in users, item in items
+        value = dataset[user, item]
+        if !isnan(value)
+            push!(elements, UserPreference(user, item, value))
+        end
+    end
+
+    return elements
+end
+
+Base.getindex(dataset::AbstractDataset, c1::Colon, c2::Colon) = dataset[1:end, 1:end]
+
 Base.getindex(dataset::AbstractDataset, c::Colon) = dataset[1:length(dataset)]
 
 Base.iterate(dataset::AbstractDataset, state = 1) = state > length(dataset) ? nothing : (dataset[state], state+1)
+
+Base.lastindex(dataset::AbstractDataset, d::Int) = d == 1 ? users(dataset) : items(dataset)
 
 function Statistics.mean(dataset::AbstractDataset)
     μ = 0
