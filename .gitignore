@@ -5,3 +5,7 @@ docs/site/
 *.jl.mem
 *.jld
 deps/deps.jl
+
+
+docs/Manifest.toml
+test/coverage/Manifest.toml
