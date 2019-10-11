@@ -52,6 +52,9 @@ Base.show(io::IO, x::MissingRating) = print(io, "Rating: ", x)
 Base.isnan(rating::AbstractRating{T}) where T <: Number = false
 Base.isnan(rating::MissingRating{T}) where T <: Number = true
 
+Base.ismissing(rating::MissingRating{T}) where T <: Number = true
+Base.ismissing(rating::AbstractRating{T}) where T <: Number = false
+
 Base.zero(::Type{AbstractRating{T}}) where T <: Number = MissingRating{T}()
 
 function convert(values::Array{T}, preference::Preference{T})::Array{AbstractRating{T}} where T <: Number
