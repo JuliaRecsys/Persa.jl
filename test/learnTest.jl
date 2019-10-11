@@ -5,7 +5,7 @@
     df2 = createdummydatasettwo()
     dataset2 = Persa.Dataset(df2, 10, 10)
 
-    mutable struct RandomModel{T} <: Persa.Model{T}
+    struct RandomModel{T} <: Persa.Model{T}
         preference::Persa.Preference{T}
         users::Int
         items::Int
