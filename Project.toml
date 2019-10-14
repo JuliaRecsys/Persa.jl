@@ -3,7 +3,7 @@ uuid = "86800b63-3017-5277-aca5-15d7d6a5f2b2"
 keywords = ["recoomendersystems", "recsys", "collaborativefiltering"]
 license = "MIT"
 desc = " Recommender System framework for Julia."
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
