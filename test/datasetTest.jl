@@ -77,6 +77,67 @@
         end
     end
 
+    @testset "Column Index Tests" begin
+        for user=1:Persa.users(dataset1)
+            @test length(dataset1[user, :]) == length(dataset1[user, 1:end])
+        end
+
+        for item=1:Persa.items(dataset1)
+            @test length(dataset1[:, item]) == length(dataset1[1:end, item])
+        end
+
+        for user=1:Persa.users(dataset2)
+            @test length(dataset2[user, :]) == length(dataset2[user, 1:end])
+        end
+
+        for item=1:Persa.items(dataset2)
+            @test length(dataset2[:, item]) == length(dataset2[1:end, item])
+        end
+
+        start = 2
+        last = Persa.users(dataset1) - 1
+
+        for item=1:Persa.items(dataset1)
+            elements = dataset1[start:last, item]
+            for element in elements
+                @test element[1] >= start && element[1] <= last
+            end
+        end
+
+        start = 2
+        last = Persa.items(dataset1) - 1
+
+        for user=1:Persa.users(dataset1)
+            elements = dataset1[user, start:last]
+            for element in elements
+                @test element[2] >= start && element[2] <= last
+            end
+        end
+
+        start = 2
+        last = Persa.users(dataset2) - 1
+
+        for item=1:Persa.items(dataset2)
+            elements = dataset2[start:last, item]
+            for element in elements
+                @test element[1] >= start && element[1] <= last
+            end
+        end
+
+        start = 2
+        last = Persa.items(dataset2) - 1
+
+        for user=1:Persa.users(dataset2)
+            elements = dataset2[user, start:last]
+            for element in elements
+                @test element[2] >= start && element[2] <= last
+            end
+        end
+
+        @test length(dataset1[1:end, 1:end]) == length(dataset1)
+        @test length(dataset2[1:end, 1:end]) == length(dataset2)
+    end
+
     @testset "Matrix Conversion Tests" begin
         matrix = Array(dataset1)
 
