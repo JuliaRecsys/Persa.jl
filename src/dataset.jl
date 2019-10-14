@@ -12,6 +12,8 @@ struct Dataset{T <: Number} <: AbstractDataset{T}
     items::Int
 end
 
+sample(dataset::Dataset, index::Array) = Persa.Dataset(dataset[index], dataset.users, dataset.items, dataset.preference)
+
 Base.string(x::Dataset) = string("""Collaborative Filtering Dataset
                                     - # users: $(users(x))
                                     - # items: $(items(x))
