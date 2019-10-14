@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recommender System framework for Julia.">
+  <meta name="author" content="JuliaRecsys">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Home - Persa.jl</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="assets/Documenter.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Persa.jl</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href=".">Home</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#persajl">Persa.jl</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#package-features">Package Features</a></li>
+        
+            <li><a class="toctree-l3" href="#goal">Goal</a></li>
+        
+            <li><a class="toctree-l3" href="#collaborative-filtering">Collaborative Filtering</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="man/getting_started/">Getting Started</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Persa.jl</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/JuliaRecsys/Persa.jl/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><a id='Persa.jl-1'></a></p>
+<h1 id="persajl">Persa.jl</h1>
+<p><a href="https://github.com/JuliaRecsys/Persa.jl">Persa</a> é um pacote para</p>
+<p><a id='Package-Features-1'></a></p>
+<h2 id="package-features">Package Features</h2>
+<ul>
+<li>Supports Julia <code>0.7</code> and <code>1.0</code>.</li>
+</ul>
+<p><a id='Goal-1'></a></p>
+<h2 id="goal">Goal</h2>
+<p>The main aim is to create a framework that facilitates the study of collaborative filtering in Julia. Collaborative filtering frameworks basically are library with set of prediction and recommendation algorithms. Most don't provide tools that facilitate the construction of new algorithms. In some cases they provide, they don't use some scientific computation language and this making development more difficult.</p>
+<p>In this scenario Persa will provide a set of tools that will facilitate the development of collaborative filtering algorithms. It will extend the Julia language by building a specific domain language (DSL) and thus increasing the productivity of development. The developer will not worry about data access and the construction of the main tasks.</p>
+<p><a id='Collaborative-Filtering-1'></a></p>
+<h2 id="collaborative-filtering">Collaborative Filtering</h2>
+<p>Collaborative filtering is one of the most successful approaches to Recommendation Systems. The purpose of this approach is to use user ratings to suggest some item that the user has not consumed and should like. This approach can be represented by a matrix where the content of it is the evaluation performed by the user on an item. However, this matrix is not necessarily complete since the user didn't necessarily consume all items.</p>
+<table>
+<thead>
+<tr>
+<th align="left">_</th>
+<th align="center">Item #1</th>
+<th align="center">Item #2</th>
+<th align="center">Item #3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">User #1</td>
+<td align="center">4</td>
+<td align="center"></td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="left">User #2</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="left">User #3</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">User #4</td>
+<td align="center"></td>
+<td align="center">5</td>
+<td align="center">4</td>
+</tr>
+</tbody>
+</table>
+<p>Persa can be divided into large two parts: data access and predictive model</p>
+<p><a id='Data-1'></a></p>
+<h3 id="data">Data</h3>
+<p>The <code>Persa.Preference</code> represents all possibilities of ratings within a system. It is used to validate a rating. We can define that in this system the ratings are defined as integers of [1,5]:</p>
+<pre><code>julia&gt; preference = Persa.Preference([1, 2, 3, 4, 5])
+Ratings Preference: [1, 2, 3, 4, 5]
+</code></pre>
+
+<p>So, we can represent a rating as:</p>
+<pre><code>julia&gt; Persa.Rating(1, preference)
+Rating: 1
+</code></pre>
+
+<p>The action of a user evaluating an item is represented by the <code>Persa.UserPreference</code> structure. Using the matrix as an example we have:</p>
+<pre><code>julia&gt; x = Persa.UserPreference(1, 1, Persa.Rating(1, preference))
+(user: 1, item: 1, rating: 1)
+</code></pre>
+
+<p>In this way, we can create the above matrix.</p>
+<pre><code>julia&gt; data
+9-element Array{Persa.UserPreference{Int64},1}:
+ (user: 1, item: 1, rating: 4)
+ (user: 1, item: 3, rating: 2)
+ (user: 2, item: 1, rating: 4)
+ (user: 2, item: 2, rating: 5)
+ (user: 2, item: 3, rating: 3)
+ (user: 3, item: 1, rating: 3)
+ (user: 3, item: 2, rating: 4)
+ (user: 4, item: 2, rating: 5)
+ (user: 3, item: 3, rating: 4)
+</code></pre>
+
+<p>The <code>Persa.Dataset</code> structure is the representation of the user-item matrix.</p>
+<pre><code>julia&gt; dataset = Persa.Dataset(data, 4, 3, preference)
+Collaborative Filtering Dataset
+- # users: 4
+- # items: 3
+- # ratings: 9
+- Ratings Preference: [1, 2, 3, 4, 5]
+</code></pre>
+
+<p>It is possible to access the data through linear indexing or by the user and item indices.</p>
+<p>In the case of linear the related <code>Persa.UserPreference</code> will be returned.</p>
+<pre><code>julia&gt; dataset[1]
+(user: 1, item: 1, rating: 4)
+</code></pre>
+
+<p>Already using the index through the user and item will be returning the rating.</p>
+<pre><code>julia&gt; dataset[1,1]
+Rating: 4
+</code></pre>
+
+<p><a id='Model-1'></a></p>
+<h3 id="model">Model</h3>
+<p>Persa has a second important abstraction. It interprets the predictive model as an access to the user-item matrix. The access to the data and the predictions become the same. In this way, the access to the information is standardized.</p>
+<p>The model will be a structure that will be of the <code>Persa.Model</code> type. This structure will need to have the information of the set of preferences and the amount of users and items.</p>
+<pre><code>mutable struct RandomModel &lt;: Persa.Model
+    preference::Persa.Preference
+    users::Int
+    items::Int
+end
+
+RandomModel(dataset::Persa.Dataset) = RandomModel(dataset.preference, Persa.users(dataset), Persa.items(dataset))
+</code></pre>
+
+<p>Finally, it will be necessary to construct a forecasting method using this model.</p>
+<pre><code>Persa.predict(model::RandomModel, user::Int, item::Int) = rand(model.preference.possibles)
+</code></pre>
+
+<p>The Persa has several abstractions that facilitate the use of the forecast. It will follow the same logic that was made for the dataset.</p>
+<pre><code>julia&gt; model = RandomModel(ds)
+RandomModel(Ratings Preference: [1, 2, 3, 4, 5], 4, 3)
+
+julia&gt; model[1,1]
+Rating: 2 (2)
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="man/getting_started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/JuliaRecsys/Persa.jl/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+        <span style="margin-left: 15px"><a href="man/getting_started/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" defer></script>
+      <script src="assets/mathjaxhelper.js" defer></script>
+      <script src="search/main.js" defer></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2019-10-14 20:50:28
+-->
