@@ -190,6 +190,8 @@
                     @test o(rating, f(preference)) == o(value, f(preference))
                     @test o(f(preference), rating) == o(f(preference), value)
                 end
+
+                @test o(rating, rating) == o(value, value)
             end
 
             @test (rating > value) == false

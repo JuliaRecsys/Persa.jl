@@ -118,9 +118,9 @@ Base.:(>=)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingO
 Base.:(<=)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("<="))
 
 Base.:(+)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) + value(r2)
-Base.:(-)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} =value(r1) - value(r2)
+Base.:(-)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) - value(r2)
 Base.:(*)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) * value(r2)
-Base.:(/)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} =value(r1) / value(r2)
+Base.:(/)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) / value(r2)
 
 Base.:(+)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) + x
 Base.:(-)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) - x
