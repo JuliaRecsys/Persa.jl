@@ -162,6 +162,18 @@
             @test_throws Exception  databaseRating >= rating
             @test_throws Exception  rating >= predictRating
             @test_throws Exception  rating >= databaseRating
+
+            @test_throws Exception  rating + rating
+            @test_throws Exception  rating - rating
+            @test_throws Exception  rating * rating
+            @test_throws Exception  rating / rating
+
+            @test_throws Exception  rating == rating
+            @test_throws Exception  rating != rating
+            @test_throws Exception  rating > rating
+            @test_throws Exception  rating < rating
+            @test_throws Exception  rating >= rating
+            @test_throws Exception  rating <= rating
         end
 
         @testset "Operations with Rating" begin
@@ -177,10 +189,29 @@
                 for f in functions
                     @test o(rating, f(preference)) == o(value, f(preference))
                     @test o(f(preference), rating) == o(f(preference), value)
-
                 end
             end
 
+            @test (rating > value) == false
+            @test (rating >= value) == true
+            @test (rating < value) == false
+            @test (rating <= value) == true
+            @test (rating == value) == true
+            @test (rating != value) == false
+
+            @test (value > rating) == false
+            @test (value >= rating) == true
+            @test (value < rating) == false
+            @test (value <= rating) == true
+            @test (value == rating) == true
+            @test (value != rating) == false
+
+            @test (rating > rating) == false
+            @test (rating < rating) == false
+            @test (rating >= rating) == true
+            @test (rating <= rating) == true
+            @test (rating == rating) == true
+            @test (rating != rating) == false
         end
     end
 end
