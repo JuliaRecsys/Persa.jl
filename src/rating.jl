@@ -65,40 +65,90 @@ function convert(values::Array{T})::Array{AbstractRating{T}} where T <: Number
     convert(values, Preference(values))
 end
 
-Base.:+(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) + value(r2)
-Base.:+(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = value(r1)
-Base.:+(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r2)
-Base.:+(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating{T}()
+#Missing Operations
+missingOperationsError(operation) = "Operation \'$operation\' is invalid with missing values"
+Base.:(+)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("-"))
+Base.:(-)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("-"))
+Base.:(*)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("*"))
+Base.:(/)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("/"))
 
-Base.:-(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} =value(r1) - value(r2)
-Base.:-(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = value(r1)
-Base.:-(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r2)
-Base.:-(r1::MissingRating{T}, r2::MissingRating{T}) where {T <: Number} = MissingRating{T}()
+Base.:(+)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("-"))
+Base.:(-)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("-"))
+Base.:(*)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("*"))
+Base.:(/)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("/"))
 
-Base.:+(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) + x
-Base.:+(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) + x
+Base.:(+)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("+"))
+Base.:(-)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("-"))
+Base.:(*)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("*"))
+Base.:(/)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("/"))
 
-Base.:-(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) - x
-Base.:-(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) - x
+Base.:(+)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("+"))
+Base.:(-)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("-"))
+Base.:(*)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("*"))
+Base.:(/)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("/"))
 
-Base.:*(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) * x
-Base.:*(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) * x
+Base.:(==)(r1::MissingRating, r2::MissingRating) where {T <: Number} = error(missingOperationsError("=="))
 
-Base.:/(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) / x
-Base.:/(x::Number, r1::AbstractRating{T}) where {T <: Number} = value(r1) / x
+Base.:(==)(r1::MissingRating, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("=="))
+Base.:(!=)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("!="))
+Base.:(>)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError(">"))
+Base.:(<)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("<"))
+Base.:(>=)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError(">="))
+Base.:(<=)(r1::MissingRating{T}, r2::AbstractRating{T}) where {T <: Number} = error(missingOperationsError("<="))
 
-Base.:(==)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) == x
-Base.:(!=)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) != x
+Base.:(==)(r1::AbstractRating{T}, r2::MissingRating) where {T <: Number} = error(missingOperationsError("=="))
+Base.:(!=)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("!="))
+Base.:(>)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError(">"))
+Base.:(<)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("<"))
+Base.:(>=)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError(">="))
+Base.:(<=)(r1::AbstractRating{T}, r2::MissingRating{T}) where {T <: Number} = error(missingOperationsError("<="))
+
+Base.:(==)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("=="))
+Base.:(!=)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("!="))
+Base.:(>)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError(">"))
+Base.:(<)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("<"))
+Base.:(>=)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError(">="))
+Base.:(<=)(r1::MissingRating{T}, x::Number) where {T <: Number} = error(missingOperationsError("<="))
+
+Base.:(==)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("=="))
+Base.:(!=)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("!="))
+Base.:(>)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError(">"))
+Base.:(<)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("<"))
+Base.:(>=)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError(">="))
+Base.:(<=)(x::Number, r1::MissingRating{T}) where {T <: Number} = error(missingOperationsError("<="))
+
+Base.:(+)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) + value(r2)
+Base.:(-)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} =value(r1) - value(r2)
+Base.:(*)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) * value(r2)
+Base.:(/)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} =value(r1) / value(r2)
+
+Base.:(+)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) + x
+Base.:(-)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) - x
+Base.:(*)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) * x
+Base.:(/)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) / x
+
+Base.:(+)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x + value(r1)
+Base.:(-)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x - value(r1)
+Base.:(*)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x * value(r1)
+Base.:(/)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x / value(r1)
 
 Base.:(==)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) == value(r2)
 Base.:(!=)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) != value(r2)
+Base.:(>=)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) >= value(r2)
+Base.:(<=)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) <= value(r2)
+Base.:(>)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) > value(r2)
+Base.:(<)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) < value(r2)
 
+Base.:(==)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) == x
+Base.:(!=)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) != x
 Base.:(>=)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) >= x
 Base.:(<=)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) <= x
 Base.:(>)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) > x
 Base.:(<)(r1::AbstractRating{T}, x::Number) where {T <: Number} = value(r1) < x
 
-Base.:(>=)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) >= value(r2)
-Base.:(<=)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) <= value(r2)
-Base.:(>)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) > value(r2)
-Base.:(<)(r1::AbstractRating{T}, r2::AbstractRating{T}) where {T <: Number} = value(r1) < value(r2)
+Base.:(==)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x == value(r1)
+Base.:(!=)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x != value(r1)
+Base.:(>=)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x >= value(r1)
+Base.:(<=)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x <= value(r1)
+Base.:(>)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x > value(r1)
+Base.:(<)(x::Number, r1::AbstractRating{T}) where {T <: Number} = x < value(r1)

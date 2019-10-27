@@ -65,4 +65,122 @@
 
     @test string(rating) == "missing"
     @test string(userPreference) == "(user: 2, item: 3, rating: missing)"
+
+    @testset "Operations with Rating" begin
+        @testset "Operations with Missing Rating" begin
+            rating = Persa.MissingRating{Int}()
+
+            predictRating = Persa.PredictRating(4.2, preference)
+            databaseRating = Persa.Rating(4, preference)
+
+            @test_throws Exception  rating + 1
+            @test_throws Exception  1 + rating
+            @test_throws Exception  rating + 1.1
+            @test_throws Exception  1.1 + rating
+            @test_throws Exception  predictRating + rating
+            @test_throws Exception  databaseRating + rating
+            @test_throws Exception  rating + predictRating
+            @test_throws Exception  rating + databaseRating
+
+            @test_throws Exception  rating - 1
+            @test_throws Exception  1 - rating
+            @test_throws Exception  rating - 1.1
+            @test_throws Exception  1.1 - rating
+            @test_throws Exception  predictRating - rating
+            @test_throws Exception  databaseRating - rating
+            @test_throws Exception  rating - predictRating
+            @test_throws Exception  rating - databaseRating
+
+            @test_throws Exception rating * 1
+            @test_throws Exception 1 * rating
+            @test_throws Exception rating * 1.1
+            @test_throws Exception 1.1 * rating
+            @test_throws Exception  predictRating * rating
+            @test_throws Exception  databaseRating * rating
+            @test_throws Exception  rating * predictRating
+            @test_throws Exception  rating * databaseRating
+
+            @test_throws Exception rating / 1
+            @test_throws Exception 1 / rating
+            @test_throws Exception rating / 1.1
+            @test_throws Exception 1.1 / rating
+            @test_throws Exception  predictRating / rating
+            @test_throws Exception  databaseRating / rating
+            @test_throws Exception  rating / predictRating
+            @test_throws Exception  rating / databaseRating
+
+            @test_throws Exception  rating == 1
+            @test_throws Exception  1 == rating
+            @test_throws Exception  rating == 1.1
+            @test_throws Exception  1.1 == rating
+            @test_throws Exception  predictRating == rating
+            @test_throws Exception  databaseRating == rating
+            @test_throws Exception  rating == predictRating
+            @test_throws Exception  rating == databaseRating
+
+            @test_throws Exception  rating != 1
+            @test_throws Exception  1 != rating
+            @test_throws Exception  rating != 1.1
+            @test_throws Exception  1.1 != rating
+            @test_throws Exception  predictRating != rating
+            @test_throws Exception  databaseRating != rating
+            @test_throws Exception  rating != predictRating
+            @test_throws Exception  rating != databaseRating
+
+            @test_throws Exception  rating < 1
+            @test_throws Exception  1 < rating
+            @test_throws Exception  rating < 1.1
+            @test_throws Exception  1.1 < rating
+            @test_throws Exception  predictRating < rating
+            @test_throws Exception  databaseRating < rating
+            @test_throws Exception  rating < predictRating
+            @test_throws Exception  rating < databaseRating
+
+            @test_throws Exception  rating > 1
+            @test_throws Exception  1 > rating
+            @test_throws Exception  rating > 1.1
+            @test_throws Exception  1.1 > rating
+            @test_throws Exception  predictRating > rating
+            @test_throws Exception  databaseRating > rating
+            @test_throws Exception  rating > predictRating
+            @test_throws Exception  rating > databaseRating
+
+            @test_throws Exception  rating <= 1
+            @test_throws Exception  1 <= rating
+            @test_throws Exception  rating <= 1.1
+            @test_throws Exception  1.1 <= rating
+            @test_throws Exception  predictRating <= rating
+            @test_throws Exception  databaseRating <= rating
+            @test_throws Exception  rating <= predictRating
+            @test_throws Exception  rating <= databaseRating
+
+            @test_throws Exception  rating >= 1
+            @test_throws Exception  1 >= rating
+            @test_throws Exception  rating >= 1.1
+            @test_throws Exception  1.1 >= rating
+            @test_throws Exception  predictRating >= rating
+            @test_throws Exception  databaseRating >= rating
+            @test_throws Exception  rating >= predictRating
+            @test_throws Exception  rating >= databaseRating
+        end
+
+        @testset "Operations with Rating" begin
+            preference = Persa.Preference([1, 2, 3, 4, 5])
+            value = 1
+            increment = 0.2
+            rating = Persa.Rating(value, preference)
+
+            functions = [maximum, minimum]
+            operations = [+, -, *, /]
+
+            for o in operations
+                for f in functions
+                    @test o(rating, f(preference)) == o(value, f(preference))
+                    @test o(f(preference), rating) == o(f(preference), value)
+
+                end
+            end
+
+        end
+    end
 end
