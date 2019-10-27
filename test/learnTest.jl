@@ -26,5 +26,7 @@ RandomModel(dataset::Persa.Dataset) = RandomModel(dataset.preference, Persa.user
 
         values = model2[dataset2]
         @test length(values) == length(dataset2)
+
+        @test ismissing(dataset1[3,6])
     end
 end
