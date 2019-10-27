@@ -215,5 +215,34 @@
             @test (rating == rating) == true
             @test (rating != rating) == false
         end
+
+        @testset "Operations with Ratings Array" begin
+            preference = Persa.Preference([1, 2, 3, 4, 5])
+            values = [1, 2, 3, 4, 5]
+            ratings = Persa.convert(values, preference)
+            i = 1
+
+            @test length(values) == length(ratings)
+            for i = 1:length(values)
+                @test values[i] == ratings[i]
+            end
+        end
+
+        @testset "Rerating" begin
+            preference = Persa.Preference([1, 2, 3, 4, 5])
+            rating = Persa.Rating(1, preference)
+            rerating = Persa.Rating(2, preference)
+
+            @test rating[1] == 1
+            @test rerating[1] == 2
+            @test_throws BoundsError rating[2]
+            @test_throws BoundsError rerating[2]
+
+            Persa.rerating(rerating, rating)
+
+            @test rerating[1] == 2
+            @test rerating[2] == 1
+            @test_throws BoundsError rerating[3]
+        end
     end
 end
