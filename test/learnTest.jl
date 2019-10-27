@@ -20,5 +20,11 @@ RandomModel(dataset::Persa.Dataset) = RandomModel(dataset.preference, Persa.user
 
     @testset "Dummy Tests" begin
         @test model1[1,1] > 0
+
+        values = model1[dataset1]
+        @test length(values) == length(dataset1)
+
+        values = model2[dataset2]
+        @test length(values) == length(dataset2)
     end
 end
