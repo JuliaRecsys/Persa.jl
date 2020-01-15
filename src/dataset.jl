@@ -50,11 +50,11 @@ function Dataset(df::DataFrames.DataFrame, users::Int, items::Int)
         throw(ArgumentError("users or items must satisfy maximum[df[!, :k]] >= k"))
     end
 
-    preference = Preference(df[!, :rating])
+    preference = Preference([df[!, :rating]...])
 
-    ratings = convert(df[!, :rating], preference)
+    ratings = convert([df[!, :rating]...], preference)
 
-    matriz = sparse(df[!, :user], df[!, :item], ratings, users, items, rerating)
+    matriz = sparse([df[!, :user]...], [df[!, :item]...], ratings, users, items, rerating)
 
     return Dataset(matriz, preference, users, items)
 end
