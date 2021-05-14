@@ -42,9 +42,10 @@ Base.iterate(p::UserPreference, state=1) = length(fieldnames(typeof(p))) < state
 Base.getindex(p::UserPreference{T}, i::Int) where T = length(fieldnames(typeof(p))) < i ? nothing : getfield(p, i)
 
 function Dataset(df::DataFrames.DataFrame, users::Int, items::Int)
-    @assert in(:user, propertynames(df))
-    @assert in(:item, propertynames(df))
-    @assert in(:rating, propertynames(df))
+    columns = propertynames(df)
+    @assert in(:user, columns)
+    @assert in(:item, columns)
+    @assert in(:rating, columns)
 
     if users < maximum(df[!, :user]) || items < maximum(df[!, :item])
         throw(ArgumentError("users or items must satisfy maximum[df[!, :k]] >= k"))
