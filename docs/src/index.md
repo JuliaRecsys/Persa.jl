@@ -4,7 +4,7 @@
 
 ## Package Features
 
-- Supports Julia `0.7` and `1.0`.
+- Supports Julia `^1`.
 
 ## Goal
 
