@@ -4,7 +4,7 @@
 
 | **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
-| [![][docs-dev-img]][docs-dev-url] | [![][travis-img]][travis-url] [![][coverage-img]][coverage-url] [![][codecov-img]][codecov-url] |
+| [![][docs-dev-img]][docs-dev-url] | [![][ci-img]][ci-url] [![][coverage-img]][coverage-url] [![][codecov-img]][codecov-url] |
 
 
 ## Installation
@@ -37,8 +37,8 @@ Some important packages:
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://juliarecsys.github.io/Persa.jl/stable
 
-[travis-img]: https://travis-ci.org/JuliaRecsys/Persa.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/JuliaRecsys/Persa.jl
+[ci-img]: https://github.com/JuliaRecsys/Persa.jl/workflows/CI/badge.svg?branch=master
+[ci-url]: https://github.com/JuliaRecsys/Persa.jl/actions
 
 [appveyor-img]: https://ci.appveyor.com/api/projects/status/xx7nimfpnl1r4gx0?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/JuliaDocs/documenter-jl
