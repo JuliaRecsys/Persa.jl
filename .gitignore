@@ -10,3 +10,5 @@ Manifest.toml
 docs/Manifest.toml
 test/coverage/Manifest.toml
 .vscode/
+
+.DS_store
