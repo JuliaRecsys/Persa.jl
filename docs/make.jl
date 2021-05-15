@@ -2,22 +2,23 @@ using Documenter, Persa
 
 makedocs(
     modules = [Persa],
-    analytics = "UA-128580038-1",
-    sitename = "Persa.jl"
+    sitename = "Persa.jl",
+    authors = "Filipe Braida and contributors.",
+    format = Documenter.HTML(
+        # Use clean URLs, unless built as a "local" build
+        canonical = "https://juliadocs.github.io/Documenter.jl/stable/",
+        assets = ["assets/favicon.ico"],
+        analytics = "UA-128580038-1",
+        highlights = ["yaml"],
+    ),
+    pages = [
+        "Home" => "index.md",
+        "Getting Started" => "man/getting_started.md"
+    ]
 )
-
-# Only build plots in travis if we are deploying
-# And dont install the dependencies unless we are deploying
-function myDeps()
-    if get(ENV, "TRAVIS", "") != ""
-        println("Installing deploy dependencies")
-        run(`pip install --user pygments mkdocs`)
-    end
-end
 
 deploydocs(
     repo = "github.com/JuliaRecsys/Persa.jl.git",
-    latest = "master",
-    julia = "1.0",
-    deps = myDeps
+    target = "build",
+    push_preview = true
 )
