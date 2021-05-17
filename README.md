@@ -4,7 +4,7 @@
 
 | **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
-| [![][docs-dev-img]][docs-dev-url] | [![][ci-img]][ci-url] [![][coverage-img]][coverage-url] [![][codecov-img]][codecov-url] |
+| [![][docs-dev-img]][docs-dev-url] | [![][ci-img]][ci-url] [ [![][codecov-img]][codecov-url] |
 
 
 ## Installation
@@ -34,16 +34,16 @@ Some important packages:
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [docs-dev-url]: https://juliarecsys.github.io/Persa.jl/dev
 
-[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-img]: https://img.shields.io/badge/docs-latest-blue?style=flat-square
 [docs-stable-url]: https://juliarecsys.github.io/Persa.jl/stable
 
-[ci-img]: https://github.com/JuliaRecsys/Persa.jl/workflows/CI/badge.svg?branch=master
+[ci-img]: https://img.shields.io/github/checks-status/JuliaRecsys/Persa.jl/master?style=flat-square
 [ci-url]: https://github.com/JuliaRecsys/Persa.jl/actions
 
 [appveyor-img]: https://ci.appveyor.com/api/projects/status/xx7nimfpnl1r4gx0?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/JuliaDocs/documenter-jl
 
-[codecov-img]: https://codecov.io/gh/JuliaRecsys/Persa.jl/branch/master/graph/badge.svg
+[codecov-img]: hhttps://img.shields.io/codecov/c/github/JuliaRecsys/Persa.jl?style=flat-square
 [codecov-url]: https://codecov.io/gh/JuliaRecsys/Persa.jl
 
 [coverage-img]: https://coveralls.io/repos/JuliaRecsys/Persa.jl/badge.svg?branch=master&service=github
