@@ -43,7 +43,7 @@ Some important packages:
 [appveyor-img]: https://ci.appveyor.com/api/projects/status/xx7nimfpnl1r4gx0?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/JuliaDocs/documenter-jl
 
-[codecov-img]: hhttps://img.shields.io/codecov/c/github/JuliaRecsys/Persa.jl?style=flat-square
+[codecov-img]: https://img.shields.io/codecov/c/github/JuliaRecsys/Persa.jl?style=flat-square
 [codecov-url]: https://codecov.io/gh/JuliaRecsys/Persa.jl
 
 [coverage-img]: https://coveralls.io/repos/JuliaRecsys/Persa.jl/badge.svg?branch=master&service=github
