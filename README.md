@@ -32,7 +32,7 @@ Some important packages:
 [contrib-url]: https://juliadocs.github.io/Documenter.jl/latest/man/contributing/
 
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
-[docs-dev-url]: https://juliarecsys.github.io/Persa.jl/latest
+[docs-dev-url]: https://juliarecsys.github.io/Persa.jl/dev
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://juliarecsys.github.io/Persa.jl/stable
