@@ -75,6 +75,15 @@
                 end
             end
         end
+
+        @testset "Limits Tests" begin
+            (users, items) = Persa.size(dataset1)
+
+            @test_throws ArgumentError dataset1[users + 1, items]
+            @test_throws ArgumentError dataset1[users, items + 1]
+            @test_throws ArgumentError dataset1[users + 1, items + 1]
+            @test_throws ArgumentError dataset1[(users * items) + 1]
+        end
     end
 
     @testset "Column Index Tests" begin
