@@ -13,7 +13,7 @@ RandomModel(dataset::Persa.Dataset) = RandomModel(dataset.preference, Persa.user
     df2 = createdummydatasettwo()
     dataset2 = Persa.Dataset(df2, 10, 10)
 
-    Persa.predict(model::RandomModel, user::Int, item::Int) = rand(model.preference.possibles)
+    Persa.predict(model::RandomModel, user::Int, item::Int) = item != 2 && user != 2 ? rand(model.preference.possibles) : missing
 
     model1 = RandomModel(dataset1)
     model2 = RandomModel(dataset2)
@@ -28,5 +28,7 @@ RandomModel(dataset::Persa.Dataset) = RandomModel(dataset.preference, Persa.user
         @test length(values) == length(dataset2)
 
         @test ismissing(dataset1[3,6])
+
+        @test ismissing(model1[2,2])
     end
 end
