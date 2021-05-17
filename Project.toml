@@ -6,12 +6,14 @@ desc = " Recommender System framework for Julia."
 version = "0.1.2"
 
 [deps]
+ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
 DataFrames = "1.1"
+ArgCheck = "2.1"
 julia = "1"
 
 [extras]

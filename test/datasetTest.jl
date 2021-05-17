@@ -75,6 +75,15 @@
                 end
             end
         end
+
+        @testset "Limits Tests" begin
+            (users, items) = Persa.size(dataset1)
+
+            @test_throws ArgumentError dataset1[users + 1, items]
+            @test_throws ArgumentError dataset1[users, items + 1]
+            @test_throws ArgumentError dataset1[users + 1, items + 1]
+            @test_throws ArgumentError dataset1[(users * items) + 1]
+        end
     end
 
     @testset "Column Index Tests" begin
@@ -136,6 +145,22 @@
 
         @test length(dataset1[1:end, 1:end]) == length(dataset1)
         @test length(dataset2[1:end, 1:end]) == length(dataset2)
+
+        @test dataset1[1] == dataset1[[1]][1]
+        @test dataset1[1] in dataset1[[1]]
+        @test dataset1[1] in dataset1[[1, 2]]
+        @test length(dataset1[[1,2,3]]) == 3
+
+        @test dataset1[1] == dataset1[1:1][1]
+        @test dataset1[1] in dataset1[1:1]
+        @test dataset1[1] in dataset1[1:2]
+        @test length(dataset1[1:3]) == 3
+
+        @test dataset1[1] == dataset1[:][1]
+        @test dataset1[1] in dataset1[:]
+        @test dataset1[1] in dataset1[:]
+        @test length(dataset1) == length(dataset1[:])
+        @test length(dataset1) == length(dataset1[:, :])
     end
 
     @testset "Matrix Conversion Tests" begin
@@ -164,5 +189,21 @@
         for (user, item, rating) in dataset2
             @test dataset2[user, item] == rating
         end
+    end
+
+    @testset "Clone Tests" begin
+        cloned = Persa.sample(dataset1, [1:length(dataset1)...])
+
+        @test length(dataset1) == length(cloned)
+        @test size(dataset1) == size(cloned)
+        @test Persa.users(dataset1) == Persa.users(cloned)
+        @test Persa.items(dataset1) == Persa.items(cloned)
+
+        cloned = Persa.sample(dataset2, [1:length(dataset2)...])
+
+        @test length(dataset2) == length(cloned)
+        @test size(dataset2) == size(cloned)
+        @test Persa.users(dataset2) == Persa.users(cloned)
+        @test Persa.items(dataset2) == Persa.items(cloned)
     end
 end

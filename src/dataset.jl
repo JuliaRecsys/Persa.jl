@@ -1,6 +1,7 @@
 import DataFrames.DataFrames
 using SparseArrays
 using Statistics
+using ArgCheck
 
 abstract type AbstractDataset{T <: Number}
 end
@@ -29,7 +30,7 @@ struct UserPreference{T}
     rating::AbstractRating{T}
 end
 
-Base.string(x::UserPreference) = string("(user: ", user(x), ", item: ", item(x), ", rating: ", x.rating, ")")
+Base.string(x::UserPreference) = string("(user: ", user(x), ", item: ", item(x), ", rating: ", rating(x), ")")
 Base.print(io::IO, x::UserPreference) = print(io, string(x))
 Base.show(io::IO, x::UserPreference) = print(io, x)
 
@@ -43,13 +44,12 @@ Base.getindex(p::UserPreference{T}, i::Int) where T = length(fieldnames(typeof(p
 
 function Dataset(df::DataFrames.DataFrame, users::Int, items::Int)
     columns = propertynames(df)
-    @assert in(:user, columns)
-    @assert in(:item, columns)
-    @assert in(:rating, columns)
+    @argcheck in(:user, columns)
+    @argcheck in(:item, columns)
+    @argcheck in(:rating, columns)
 
-    if users < maximum(df[!, :user]) || items < maximum(df[!, :item])
-        throw(ArgumentError("users or items must satisfy maximum[df[!, :k]] >= k"))
-    end
+    @argcheck users >= maximum(df[!, :user])
+    @argcheck items >= maximum(df[!, :item])
 
     preference = Preference([df[!, :rating]...])
 
@@ -101,12 +101,9 @@ function Base.Array(dataset::Dataset{T})::Matrix{Union{Missing, T}} where T <: N
     return matrix
 end
 
-checkuser(dataset::AbstractDataset, user::Int) = (user >= 0 && user <= users(dataset)) ? user : error("invalid user id ($user)")
-checkitem(dataset::AbstractDataset, item::Int) = (item >= 0 && item <= items(dataset)) ? item : error("invalid item id ($item)")
-
 function Base.getindex(dataset::AbstractDataset, user::Int, item::Int)::AbstractRating
-    checkuser(dataset, user)
-    checkitem(dataset, item)
+    @argcheck user >= 0 && user <= users(dataset)
+    @argcheck item >= 0 && item <= items(dataset)
 
     dataset.ratings[user, item]
 end

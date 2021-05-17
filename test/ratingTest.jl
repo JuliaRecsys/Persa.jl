@@ -1,5 +1,15 @@
 @testset "Rating Kernel Tests" begin
+    preference = Persa.Preference([1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0])
+    @test string(preference) == "[1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]"
+    @test size(preference) == 9
+    @test eltype(preference) <: Real
+    @test Persa.recommendation(preference) == 4.0
+
     preference = Persa.Preference([1, 2, 3, 4, 5])
+    @test string(preference) == "[1, 2, 3, 4, 5]"
+    @test size(preference) == 5
+    @test eltype(preference) <: Int
+    @test Persa.recommendation(preference) == 4.0
 
     @test Persa.value(Persa.MissingRating()) === missing
     @test Persa.value(Persa.MissingRating{Int}()) === missing
