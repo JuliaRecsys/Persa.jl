@@ -160,6 +160,7 @@
         @test dataset1[1] in dataset1[:]
         @test dataset1[1] in dataset1[:]
         @test length(dataset1) == length(dataset1[:])
+        @test length(dataset1) == length(dataset1[:, :])
     end
 
     @testset "Matrix Conversion Tests" begin
