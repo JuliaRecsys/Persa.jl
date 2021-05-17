@@ -190,4 +190,20 @@
             @test dataset2[user, item] == rating
         end
     end
+
+    @testset "Clone Tests" begin
+        cloned = Persa.sample(dataset1, [1:length(dataset1)...])
+
+        @test length(dataset1) == length(cloned)
+        @test size(dataset1) == size(cloned)
+        @test Persa.users(dataset1) == Persa.users(cloned)
+        @test Persa.items(dataset1) == Persa.items(cloned)
+
+        cloned = Persa.sample(dataset2, [1:length(dataset2)...])
+
+        @test length(dataset2) == length(cloned)
+        @test size(dataset2) == size(cloned)
+        @test Persa.users(dataset2) == Persa.users(cloned)
+        @test Persa.items(dataset2) == Persa.items(cloned)
+    end
 end
