@@ -145,6 +145,21 @@
 
         @test length(dataset1[1:end, 1:end]) == length(dataset1)
         @test length(dataset2[1:end, 1:end]) == length(dataset2)
+
+        @test dataset1[1] == dataset1[[1]][1]
+        @test dataset1[1] in dataset1[[1]]
+        @test dataset1[1] in dataset1[[1, 2]]
+        @test length(dataset1[[1,2,3]]) == 3
+
+        @test dataset1[1] == dataset1[1:1][1]
+        @test dataset1[1] in dataset1[1:1]
+        @test dataset1[1] in dataset1[1:2]
+        @test length(dataset1[1:3]) == 3
+
+        @test dataset1[1] == dataset1[:][1]
+        @test dataset1[1] in dataset1[:]
+        @test dataset1[1] in dataset1[:]
+        @test length(dataset1) == length(dataset1[:])
     end
 
     @testset "Matrix Conversion Tests" begin
