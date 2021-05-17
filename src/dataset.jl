@@ -30,7 +30,7 @@ struct UserPreference{T}
     rating::AbstractRating{T}
 end
 
-Base.string(x::UserPreference) = string("(user: ", user(x), ", item: ", item(x), ", rating: ", x.rating, ")")
+Base.string(x::UserPreference) = string("(user: ", user(x), ", item: ", item(x), ", rating: ", rating(x), ")")
 Base.print(io::IO, x::UserPreference) = print(io, string(x))
 Base.show(io::IO, x::UserPreference) = print(io, x)
 
