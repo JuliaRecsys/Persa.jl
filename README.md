@@ -28,6 +28,7 @@ Some important packages:
 - **[DatasetsCF](https://github.com/JuliaRecsys/DatasetsCF.jl)**: Package with collaborative filtering datasets.
 - **[EvaluationCF](https://github.com/JuliaRecsys/EvaluationCF.jl)**: Packages for evaluation of predictive algorithms. It contains metrics, data partitioning and more. (under construction)
 - **[ModelBasedCF](https://github.com/JuliaRecsys/ModelBasedCF.jl)**: Model based algorithms. (under construction)
+- **[Surprise](https://github.com/JuliaRecsys/Surprise.jl)**: Suprise-Python Wrapper for Persa.jl 
 
 [contrib-url]: https://juliadocs.github.io/Documenter.jl/latest/man/contributing/
 
